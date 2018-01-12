@@ -1,11 +1,11 @@
 // Copyright 2011 Chris Edwards
-// 
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 //     http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -30,7 +30,7 @@ namespace Fluency.Tests.Probabilities
                 _probability = new ProbabilitySpecification<int>().PercentOutcome(100, expectedOutcome);
                 outcome = _probability.GetOutcome();
             }
-            
+
             [Fact]
             public void should_return_the_single_100_percent_outcome() =>
                 outcome.Should().Be(expectedOutcome);
@@ -76,7 +76,7 @@ namespace Fluency.Tests.Probabilities
             {
                 outcomes.Should().NotContain(outcome);
             }
-            
+
             const int outcome = 1;
             static ProbabilitySpecification<int> probability;
             static IEnumerable<int> outcomes;

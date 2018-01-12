@@ -1,11 +1,11 @@
 // Copyright 2011 Chris Edwards
-// 
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 //     http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -17,34 +17,34 @@ using System.Reflection;
 
 namespace Fluency.Conventions
 {
-	public class LambdaConvention< T > : IDefaultConvention< T >
-	{
-		readonly Func< PropertyInfo, T > _defaultValue;
-		readonly Predicate< PropertyInfo > _appliesTo;
+    public class LambdaConvention< T > : IDefaultConvention< T >
+    {
+        readonly Func< PropertyInfo, T > _defaultValue;
+        readonly Predicate< PropertyInfo > _appliesTo;
 
 
-		public LambdaConvention( Predicate< PropertyInfo > appliesTo, Func< PropertyInfo, T > defaultValue )
-		{
-			_appliesTo = appliesTo;
-			_defaultValue = defaultValue;
-		}
+        public LambdaConvention( Predicate< PropertyInfo > appliesTo, Func< PropertyInfo, T > defaultValue )
+        {
+            _appliesTo = appliesTo;
+            _defaultValue = defaultValue;
+        }
 
 
-		public bool AppliesTo( PropertyInfo propertyInfo )
-		{
-			return _appliesTo.Invoke( propertyInfo );
-		}
+        public bool AppliesTo( PropertyInfo propertyInfo )
+        {
+            return _appliesTo.Invoke( propertyInfo );
+        }
 
 
-		object IDefaultConvention.DefaultValue( PropertyInfo propertyInfo )
-		{
-			return DefaultValue( propertyInfo );
-		}
+        object IDefaultConvention.DefaultValue( PropertyInfo propertyInfo )
+        {
+            return DefaultValue( propertyInfo );
+        }
 
 
-		public T DefaultValue( PropertyInfo propertyInfo )
-		{
-			return AppliesTo( propertyInfo ) ? _defaultValue.Invoke( propertyInfo ) : default( T );
-		}
-	}
+        public T DefaultValue( PropertyInfo propertyInfo )
+        {
+            return AppliesTo( propertyInfo ) ? _defaultValue.Invoke( propertyInfo ) : default( T );
+        }
+    }
 }

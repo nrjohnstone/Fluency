@@ -4,10 +4,10 @@ using Xunit;
 namespace Fluency.Tests.BuilderTests
 {
     /// <summary>
-    /// A FluentBuilder can be set as an 'alias' for an existing instance. 
+    /// A FluentBuilder can be set as an 'alias' for an existing instance.
     /// This means it will return the existing instance rather than build a new one.
     /// <example>
-    ///		_builder.AliasFor( _existingInstance );
+    ///     _builder.AliasFor( _existingInstance );
     /// </example>
     /// </summary>
     public class Using_a_custom_builder_as_an_alias_for_an_existing_instance

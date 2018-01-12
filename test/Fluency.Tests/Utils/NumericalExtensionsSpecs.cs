@@ -22,7 +22,7 @@ namespace Fluency.Tests.Utils
             public void should_return_5_elements() => _results.Count().Should().Be(5);
 
             [Fact]
-            public void should_return_all_integers() => _results.Count(x => x > 0).Should().Be(5);            
+            public void should_return_all_integers() => _results.Count(x => x > 0).Should().Be(5);
         }
     }
 }

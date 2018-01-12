@@ -30,9 +30,9 @@ namespace Fluency.Tests
 
         public class FluencyInitializationBaseSpecs
         {
-            protected TestItem _item;     
+            protected TestItem _item;
         }
-        
+
         public class When_Fluency_is_configured_to_use_decrementing_ids : FluencyInitializationBaseSpecs
         {
             public When_Fluency_is_configured_to_use_decrementing_ids()
@@ -93,9 +93,9 @@ namespace Fluency.Tests
                 Fluency.Initialize(x => x.UseDefaultValueConventions());
                 _item = new TestItemBuilder().build();
             }
-            
+
             [Fact]
-            public void the_default_conventions_should_be_used() => 
+            public void the_default_conventions_should_be_used() =>
                 Fluency.Configuration.DefaultValueConventions.Count.Should().BeGreaterThan(0);
         }
     }

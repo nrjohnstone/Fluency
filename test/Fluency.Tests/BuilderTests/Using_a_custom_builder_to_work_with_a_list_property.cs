@@ -8,13 +8,13 @@ using Xunit;
 namespace Fluency.Tests.BuilderTests
 {
     /// <summary>
-    /// A FluentBuilder can work with properties that are generic lists. 
+    /// A FluentBuilder can work with properties that are generic lists.
     /// It does not yet support other types of collections though.
     /// </summary>
     public class Using_a_custom_builder_to_work_with_a_list_property
     {
         /// <summary>
-        /// Target Class <see cref="Foo"/> has a list property of type <see cref="IList{T}"/> 
+        /// Target Class <see cref="Foo"/> has a list property of type <see cref="IList{T}"/>
         /// </summary>
         public class Foo
         {
@@ -39,9 +39,9 @@ namespace Fluency.Tests.BuilderTests
         {
             public string SomeProperty { get; set; }
         }
-        
+
         public class FooBuilder : FluentBuilder<Foo> { }
-        
+
         public class Given_a_builder_for_a_target_type_having_a_list_property
         {
             protected FooBuilder _builder;
@@ -106,7 +106,7 @@ namespace Fluency.Tests.BuilderTests
 
                     setProperty.ShouldThrow<ArgumentException>();
                 }
-            }           
+            }
         }
 
         public class By_passing_in_a_prepopulated_list_for_the_list_property

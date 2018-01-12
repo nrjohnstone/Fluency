@@ -185,15 +185,15 @@ namespace Fluency.Tests.DataGeneration
         public class When_generating_a_random_double
         {
             [Fact]
-            public void should_generate_a_double() => ARandom.Double().Should().BeGreaterOrEqualTo(0D);        
+            public void should_generate_a_double() => ARandom.Double().Should().BeGreaterOrEqualTo(0D);
         }
-        
+
         public class When_generating_a_random_double_between_two_values
         {
             [Fact]
             public void should_generate_value_greater_than_or_equal_to_min_value() =>
                 ARandom.DoubleBetween(0, double.Epsilon).Should().BeGreaterOrEqualTo(0);
-            
+
             [Fact]
             public void should_generate_value_less_than_or_equal_to_max_value() =>
                 ARandom.DoubleBetween(0, double.Epsilon).Should().BeLessOrEqualTo(double.Epsilon);
@@ -226,12 +226,12 @@ namespace Fluency.Tests.DataGeneration
             public void should_fail_if_min_is_greater_than_max() =>
                 Catch.Exception(() => ARandom.DoubleBetween(1.0001, 0)).Should().BeOfType<ArgumentException>();
         }
-        
+
         public class When_generating_a_random_single
         {
             [Fact]
             public void should_generate_a_float() =>
-                ARandom.Float().Should().BeOfType(typeof(float));                 
+                ARandom.Float().Should().BeOfType(typeof(float));
         }
 
         public class When_generating_a_random_float_between_two_values
@@ -258,7 +258,7 @@ namespace Fluency.Tests.DataGeneration
 
             [Fact]
             public void should_fail_if_min_is_greater_than_max() =>
-                Catch.Exception(() => ARandom.FloatBetween(float.Epsilon, 0)).Should().BeOfType<ArgumentException>();            
+                Catch.Exception(() => ARandom.FloatBetween(float.Epsilon, 0)).Should().BeOfType<ArgumentException>();
         }
 
         public class When_generating_a_random_currency_amount_between_a_specified_max_and_min_amount
@@ -272,7 +272,7 @@ namespace Fluency.Tests.DataGeneration
                 ARandom.CurrencyAmountBetween(minAmount, maxAmount)
                     .Should().BeGreaterOrEqualTo(minAmount)
                     .And.BeLessOrEqualTo(maxAmount);
-            }            
+            }
         }
 
         public class When_generating_a_random_currency_amount_less_than_a_specified_amount
@@ -280,7 +280,7 @@ namespace Fluency.Tests.DataGeneration
             [Fact]
             public void when_max_amount_is_positive_should_generate_an_amount_less_than_the_specified_max_amount() =>
                 ARandom.CurrencyAmountLessThan(100).Should().BeLessThan(100);
-        
+
             [Fact]
             public void when_max_amount_is_negative_should_throw_an_argument_exception() =>
                 Catch.Exception(() => ARandom.CurrencyAmountLessThan(-100)).Should().BeOfType<ArgumentException>();
@@ -306,7 +306,7 @@ namespace Fluency.Tests.DataGeneration
                 ARandom.DateTimeBefore(DateTime.Parse("1/1/2010 2:00:00 PM"))
                 .Should().BeBefore(DateTime.Parse("1/1/2010 2:00:00 PM"));
         }
-        
+
         public class When_generating_a_random_datetime_after_a_specified_datetime
         {
             [Fact]
@@ -314,14 +314,14 @@ namespace Fluency.Tests.DataGeneration
                 ARandom.DateTimeAfter(DateTime.Parse("1/1/2010 2:00:00 PM"))
                 .Should().BeAfter(DateTime.Parse("1/1/2010 2:00:00 PM"));
         }
-        
+
         public class When_generating_a_random_datetime_in_the_past
         {
             [Fact]
             public void should_return_a_datetime_prior_to_now() =>
                 ARandom.DateTimeInPast().Should().BeBefore(DateTime.Now);
         }
-        
+
         public class When_generating_a_random_datetime_in_the_past_since_a_specified_date
         {
             [Fact]
@@ -339,43 +339,43 @@ namespace Fluency.Tests.DataGeneration
                 ARandom.DateTimeInPastSince(DateTime.Parse("1/1/2010 2:00:00 PM"))
                 .Should().BeBefore(DateTime.Now);
         }
-        
+
         public class When_generating_a_random_datetime_in_the_past_year
         {
             [Fact]
             public void should_return_a_datetime_greater_than_the_specified_since_datetime() =>
                 ARandom.DateTimeInPastYear().Should().BeAfter(1.YearsAgo());
-            
+
             [Fact]
             public void should_return_a_datetime_prior_to_now () =>
                 ARandom.DateTimeInPastYear().Should().BeBefore(DateTime.Now);
         }
-        
+
         public class When_generating_a_random_datetime_in_the_future
         {
             [Fact]
             public void should_return_a_datetime_after_now() =>
                 ARandom.DateTimeInFuture().Should().BeAfter(DateTime.Now);
         }
-        
+
         public class When_generating_a_random_datetime_between_two_datetimes
         {
             [Fact]
             public void should_fail_if_the_start_date_is_greater_than_the_end_date() =>
-                Catch.Exception(() => ARandom.DateTimeBetween(DateTime.Parse("2/1/2010 1:00:00 PM"), 
+                Catch.Exception(() => ARandom.DateTimeBetween(DateTime.Parse("2/1/2010 1:00:00 PM"),
                     DateTime.Parse("1/1/2010 2:00:00 PM"))).Should().BeOfType<ArgumentException>();
 
             [Fact]
             public void should_be_greater_than_or_equal_to_the_min_date() =>
                 ARandom.DateTimeBetween(
-                    DateTime.Parse("1/1/2010 2:00:00 PM"), 
+                    DateTime.Parse("1/1/2010 2:00:00 PM"),
                     DateTime.Parse("2/1/2010 2:00:00 PM"))
                 .Should().BeOnOrAfter(DateTime.Parse("1/1/2010 2:00:00 PM"));
 
             [Fact]
             public void should_be_less_than_or_equal_to_the_max_date() =>
                 ARandom.DateTimeBetween(
-                    DateTime.Parse("1/1/2010 2:00:00 PM"), 
+                    DateTime.Parse("1/1/2010 2:00:00 PM"),
                     DateTime.Parse("2/1/2010 2:00:00 PM"))
                 .Should().BeOnOrBefore(DateTime.Parse("2/1/2010 2:00:00 PM"));
         }
@@ -383,7 +383,7 @@ namespace Fluency.Tests.DataGeneration
         public class When_generating_a_random_date
         {
             [Fact]
-            public void should_not_have_a_time_component() => 
+            public void should_not_have_a_time_component() =>
                 ARandom.Date().TimeOfDay.Should().Be(TimeSpan.FromTicks(0));
         }
 
@@ -403,34 +403,34 @@ namespace Fluency.Tests.DataGeneration
             [Fact]
             public void should_fail_if_no_date_boundary_exists_between_the_two_times() =>
                 Catch.Exception(() => ARandom.DateBetween(
-                    DateTime.Parse("1/1/2010 1:00:00 PM"), 
+                    DateTime.Parse("1/1/2010 1:00:00 PM"),
                     DateTime.Parse("1/1/2010 2:00:00 PM")))
                 .Should().BeOfType<FluencyException>();
 
             [Fact]
             public void should_fail_if_the_start_date_is_greater_than_the_end_date() =>
                 Catch.Exception(() => ARandom.DateBetween(
-                    DateTime.Parse("2/1/2010 1:00:00 PM"), 
+                    DateTime.Parse("2/1/2010 1:00:00 PM"),
                     DateTime.Parse("1/1/2010 2:00:00 PM")))
                 .Should().BeOfType<ArgumentException>();
 
             [Fact]
             public void should_be_a_date_with_no_time_information() =>
                 ARandom.DateBetween(
-                    DateTime.Parse("1/1/2010 2:00:00 PM"), 
+                    DateTime.Parse("1/1/2010 2:00:00 PM"),
                     DateTime.Parse("2/1/2010 2:00:00 PM")).Hour.Should().Be(0);
 
             [Fact]
             public void should_be_greater_than_or_equal_to_the_min_date() =>
                 ARandom.DateBetween(
-                    DateTime.Parse("1/1/2010 2:00:00 PM"), 
+                    DateTime.Parse("1/1/2010 2:00:00 PM"),
                     DateTime.Parse("2/1/2010 2:00:00 PM"))
                 .Should().BeOnOrAfter(DateTime.Parse("1/1/2010 2:00:00 PM"));
 
             [Fact]
             public void should_be_less_than_or_equal_to_the_max_date() =>
                 ARandom.DateBetween(
-                    DateTime.Parse("1/1/2010 2:00:00 PM"), 
+                    DateTime.Parse("1/1/2010 2:00:00 PM"),
                     DateTime.Parse("2/1/2010 2:00:00 PM"))
                 .Should().BeOnOrBefore(DateTime.Parse("2/1/2010 2:00:00 PM"));
         }
@@ -438,12 +438,12 @@ namespace Fluency.Tests.DataGeneration
         public class When_generating_a_random_age
         {
             [Fact]
-            public void should_be_greater_than_or_equal_to_one() => 
+            public void should_be_greater_than_or_equal_to_one() =>
                 ARandom.Age().Should().BeGreaterOrEqualTo(1);
 
             [Fact]
             public void should_be_less_than_or_equal_to_100() =>
-                ARandom.Age().Should().BeLessOrEqualTo(100);            
+                ARandom.Age().Should().BeLessOrEqualTo(100);
         }
 
         public class When_generating_a_random_adult_age
@@ -454,7 +454,7 @@ namespace Fluency.Tests.DataGeneration
 
             [Fact]
             public void should_be_less_than_or_equal_to_65() =>
-                ARandom.AdultAge().Should().BeLessOrEqualTo(65);            
+                ARandom.AdultAge().Should().BeLessOrEqualTo(65);
         }
 
         public class When_generating_a_random_birth_date_given_a_persons_age
@@ -466,7 +466,7 @@ namespace Fluency.Tests.DataGeneration
             [Fact]
             public void should_not_allow_an_age_greater_than_1000() =>
                 Catch.Exception(() => ARandom.BirthDateForAge(1001)).Should().BeOfType<ArgumentOutOfRangeException>();
-            
+
             [Fact]
             public void should_return_a_date_earlier_than_the_age_number_of_years_ago() =>
                 ARandom.BirthDateForAge(10).Should().BeBefore(10.YearsAgo());
@@ -481,7 +481,7 @@ namespace Fluency.Tests.DataGeneration
             [Fact]
             public void should_be_a_date_that_does_not_include_time_information() =>
                 ARandom.BirthDateForAge(10).TimeOfDay.Should().Be(TimeSpan.FromTicks(0));
-            
+
             [Fact]
             public void should_be_less_than_or_equal_to_10_years_ago_today() =>
                 ARandom.BirthDateForAge(10).Should().BeOnOrBefore(10.YearsAgo().Date);
@@ -508,13 +508,13 @@ namespace Fluency.Tests.DataGeneration
                     .Should().BeOneOf("a", "b", "c");
         }
 
-        
+
         public class When_getting_a_random_item_from_an_array_paramlist
         {
             [Fact]
             public void should_fail_if_passed_a_null_list() =>
                 Catch.Exception(() => ARandom.ItemFrom((string[])null)).Should().BeOfType<ArgumentNullException>();
-            
+
             [Fact]
             public void should_fail_if_passed_an_empty_list() =>
                 Catch.Exception(() => ARandom.ItemFrom(new string[] { })).Should().BeOfType<ArgumentException>();
@@ -523,14 +523,14 @@ namespace Fluency.Tests.DataGeneration
             public void should_return_one_of_the_values_passed_in_the_list() =>
                 ARandom.ItemFrom(new[] {"a", "b", "c"}).Should().BeOneOf(new[] {"a", "b", "c"});
         }
-        
+
         public class When_getting_a_random_int_from_multiple_threads_at_the_same_time
         {
             [Fact]
             public void should_return_mostly_unique_values()
             {
                 BlockingCollection<int> values = new BlockingCollection<int>();
-                Parallel.For(0, 100, 
+                Parallel.For(0, 100,
                     new ParallelOptions { MaxDegreeOfParallelism = 10 },
                     (i, loop) => values.Add(ARandom.IntBetween(int.MinValue, int.MaxValue)));
 
@@ -546,7 +546,7 @@ namespace Fluency.Tests.DataGeneration
                 ARandom.AddressLine1().Should().NotBeEmpty();
 
             [Fact]
-            public void should_start_with_a_number() => 
+            public void should_start_with_a_number() =>
                 ARandom.AddressLine1().Should().MatchRegex("^\\d+");
         }
 
