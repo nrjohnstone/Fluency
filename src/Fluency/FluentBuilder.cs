@@ -36,11 +36,9 @@ namespace Fluency
 		protected readonly ListDictionary _properties;
 		private readonly IList< IDefaultConvention > _defaultConventions = new List< IDefaultConvention >();
 		protected IIdGenerator IdGenerator;
-// ReSharper disable StaticFieldInGenericType
-		private static ConstructorInfo _typeConstructor;
-		private static bool _triedToGetConstructor;
-// ReSharper restore StaticFieldInGenericType
 
+		private ConstructorInfo _typeConstructor;
+		private bool _triedToGetConstructor;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="FluentBuilder{T}"/> class.
