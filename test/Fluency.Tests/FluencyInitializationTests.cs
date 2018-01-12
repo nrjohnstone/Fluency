@@ -1,4 +1,7 @@
-﻿using Fluency.IdGenerators;
+﻿using System;
+using System.IO;
+using System.Reflection;
+using Fluency.IdGenerators;
 using FluentAssertions;
 using Xunit;
 
@@ -59,6 +62,7 @@ namespace Fluency.Tests
         {
             public When_no_id_generator_is_specified_for_fluency()
             {
+                Fluency.Initialize(x => new FluencyConfiguration());
                 _item = new TestItemBuilder().build();
             }
 
@@ -71,6 +75,9 @@ namespace Fluency.Tests
         {
             public When_no_default_value_conventions_are_specified()
             {
+                // Due to the nature of test runners that don't specify the order of tests
+                // we must simulate the "default" convention here
+                Fluency.Initialize(x => new FluencyConfiguration());
                 _item = new TestItemBuilder().build();
             }
 
