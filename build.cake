@@ -34,6 +34,32 @@ Task("Clean")
 });
 
 
+Task("Update-Version")
+    .Description("Calculate the version number and update assembly version files.")
+    .Does(() => 
+{
+    try 
+    {    
+        var assemblyInfoFile = Directory("./src/Fluency") + File("Properties/AssemblyVersionInfo.cs");
+        if (!FileExists(assemblyInfoFile))
+        {
+            Information("Assembly version file does not exist : " + assemblyInfoFile.Path);
+            CopyFile("./src/AssemblyVersionInfo.template.cs", assemblyInfoFile);
+        }
+        
+        GitVersion(new GitVersionSettings { 
+            NoFetch = false,
+            OutputType = GitVersionOutput.BuildServer,
+            UpdateAssemblyInfo = true,
+            UpdateAssemblyInfoFilePath = assemblyInfoFile });                    
+    }
+    catch (Exception ex) {
+        Information(ex.ToString());
+        // Assume that we might be in a pull request build which cannot have the version calculated
+    }   
+});
+
+
 Task("Restore-NuGet-Packages")
     .IsDependentOn("Clean")
     .Does(() =>
@@ -64,6 +90,7 @@ Task("Pack-Nuget")
 
 Task("Build")
     .IsDependentOn("Restore-NuGet-Packages")
+    .IsDependentOn("Update-Version")
     .Does(() =>
 {
     MSBuild(solutionFile, settings => settings
