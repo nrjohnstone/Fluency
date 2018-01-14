@@ -78,27 +78,12 @@ namespace Fluency
             {
                 var propertyName = pair.Key;
                 var builder = pair.Value;
-
+                
                 var propertyValue = builder.InvokeMethod( "build" );
                 _properties[propertyName] = propertyValue;
             }
             
-            foreach (var propertyInfo in typeof(T).GetProperties())
-            {
-                if (_properties.Contains(propertyInfo.Name))
-                    continue;
-
-                if (_ignoredProperties.Contains(propertyInfo.Name))
-                    continue;
-
-                // If the property is both Read and Write, set its value.
-                if (propertyInfo.CanWrite && propertyInfo.CanRead)
-                {
-                    // Get the default value from the configured conventions and set the value.
-                    var defaultValue = GetDefaultValue(propertyInfo);
-                    _properties.Add(propertyInfo.Name, defaultValue);
-                }
-            }
+            ConfigureImplicitDefaultValues();
 
             // Allow the client builder the opportunity to do some pre-processing.
             BeforeBuilding();
@@ -118,6 +103,28 @@ namespace Fluency
             return result;
         }
 
+        private void ConfigureImplicitDefaultValues()
+        {
+            foreach (var propertyInfo in typeof(T).GetProperties())
+            {
+                if (PropertyIsAlreadySet(propertyInfo))
+                    continue;
+
+                if (IsIgnoredProperty(propertyInfo.Name))
+                    continue;
+                
+                if (propertyInfo.CanWrite && propertyInfo.CanRead)
+                {
+                    var defaultValue = GetDefaultValue(propertyInfo);
+                    _properties.Add(propertyInfo.Name, defaultValue);
+                }
+            }
+        }
+
+        private bool PropertyIsAlreadySet(PropertyInfo propertyInfo)
+        {
+            return _properties.Contains(propertyInfo.Name);
+        }
 
         protected virtual T GetNewInstance()
         {
