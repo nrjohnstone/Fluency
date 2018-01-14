@@ -34,12 +34,21 @@ namespace Fluency.Tests.BuilderTests
             }
         }
 
+        private class AClassWithTwoPropertiesBuilder : FluentBuilder<AClassWithTwoProperties>
+        {
+            public AClassWithTwoPropertiesBuilder WithPropertyA(string value)
+            {
+                SetProperty(x => x.PropertyA, value);
+                return this;
+            }
+        }
+
         public class When_builder_is_not_configured_to_ignore_any_property : Given_AClassWithMultipleProperties
         {
             [Fact]
             public void should_populate_all_properties ()
             {
-                var builder = new FluentBuilder<AClassWithTwoProperties>();
+                var builder = new AClassWithTwoPropertiesBuilder();
 
                 var instance = builder.build();
 
@@ -53,7 +62,7 @@ namespace Fluency.Tests.BuilderTests
             [Fact]
             public void should_not_call_setter_for_ignored_property()
             {
-                var builder = new FluentBuilder<AClassWithTwoProperties>();
+                var builder = new AClassWithTwoPropertiesBuilder();
                 builder.IgnoreProperty(x => x.PropertyB);
 
                 var instance = builder.build();
@@ -68,7 +77,7 @@ namespace Fluency.Tests.BuilderTests
             [Fact]
             public void should_not_call_setter_for_any_property()
             {
-                var builder = new FluentBuilder<AClassWithTwoProperties>();
+                var builder = new AClassWithTwoPropertiesBuilder();
                 builder.IgnoreProperty(x => x.PropertyA);
                 builder.IgnoreProperty(x => x.PropertyB);
 
@@ -84,7 +93,7 @@ namespace Fluency.Tests.BuilderTests
             [Fact]
             public void should_not_call_setter_for_any_property()
             {
-                var builder = new FluentBuilder<AClassWithTwoProperties>();
+                var builder = new AClassWithTwoPropertiesBuilder();
                 builder.IgnoreAllProperties();
 
                 var instance = builder.build();
@@ -92,6 +101,39 @@ namespace Fluency.Tests.BuilderTests
                 instance.PropertyASetterCalled.Should().Be(false);
                 instance.PropertyBSetterCalled.Should().Be(false);
             }
+
+            [Fact]
+            public void and_IgnoreAllProperties_called_after_explicitly_set_values_should_still_set_explicit_properties()
+            {
+                var builder = new AClassWithTwoPropertiesBuilder();
+
+                builder.WithPropertyA("Foo");
+                builder.IgnoreAllProperties();
+
+                var instance = builder.build();
+
+                instance.PropertyA.Should().Be("Foo");
+                instance.PropertyBSetterCalled.Should().Be(false);
+            }
         }
+
+        public class
+            When_builder_is_configured_to_ignore_all_properties_and_a_property_is_set_explicitly :
+                Given_AClassWithMultipleProperties
+        {
+            [Fact]
+            public void should_set_explicit_property()
+            {
+                var builder = new AClassWithTwoPropertiesBuilder();
+                builder.IgnoreAllProperties();
+                builder.WithPropertyA("Foo");
+                                
+                var instance = builder.build();
+
+                instance.PropertyA.Should().Be("Foo");
+                instance.PropertyBSetterCalled.Should().Be(false);
+            }
+        }
+
     }
 }
