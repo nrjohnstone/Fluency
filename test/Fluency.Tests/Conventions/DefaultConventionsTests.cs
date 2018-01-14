@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Fluency.DataGeneration;
 using FluentAssertions;
 using Xunit;

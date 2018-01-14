@@ -1,4 +1,4 @@
-﻿using Fluency.IdGenerators;
+using Fluency.IdGenerators;
 using FluentAssertions;
 using Xunit;
 
