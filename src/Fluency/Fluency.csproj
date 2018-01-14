@@ -75,6 +75,7 @@
     <Compile Include="DataGeneration\ValueConstraints.cs" />
     <Compile Include="DataGeneration\WaffleEngine.cs" />
     <Compile Include="DynamicFluentBuilder.cs" />
+    <Compile Include="Properties\AssemblyVersionInfo.cs" />
     <Compile Include="Utils\NumericalExtensions.cs" />
     <Compile Include="Fluency.cs" />
     <Compile Include="FluencyConfiguration.cs" />
@@ -133,5 +134,4 @@
   </Target>
   <Target Name="AfterBuild">
   </Target>
-  
 </Project>

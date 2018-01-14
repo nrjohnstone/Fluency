@@ -33,8 +33,3 @@ using System.Runtime.InteropServices;
 [assembly: Guid("8ea43609-1872-4ad5-a296-c990239a9bf8")]
 [assembly: InternalsVisibleTo("Fluency.Tests.Deprecated")]
 [assembly: InternalsVisibleTo("Fluency.Tests")]
-
-
-
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
