@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using Fluency.Conventions;
 using Fluency.Utils;
 using FluentAssertions;

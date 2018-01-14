@@ -53,7 +53,6 @@ namespace Fluency
             Initialize();
         }
 
-
         private void Initialize()
         {
             // Specify default values for each property based on conventions.
