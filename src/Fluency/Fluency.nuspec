@@ -7,7 +7,7 @@
 		<authors>Chris Edwards, Nathan Johnstone</authors>
 		<owners>Chris Edwards, Nathan Johnstone</owners>
 		<licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
-		<projectUrl>http://github.com/ChrisEdwards/Fluency</projectUrl>
+		<projectUrl>http://github.com/nrjohnstone/Fluency</projectUrl>
 		<iconUrl>http://chrisedwards.dreamhosters.com/images/FluencyLogo.png</iconUrl>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
 		<summary>Fluency is a factory that creates object graphs populated with fake data.</summary>
