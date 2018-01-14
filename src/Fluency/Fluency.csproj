@@ -127,10 +127,11 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
+       Other similar extension points exist, see Microsoft.Common.targets. -->
   <Target Name="BeforeBuild">
+    <Copy Condition="!Exists('Properties\AssemblyVersionInfo.cs')" SourceFiles="$(SolutionDir)\AssemblyVersionInfo.template.cs" DestinationFiles="Properties\AssemblyVersionInfo.cs" />
   </Target>
   <Target Name="AfterBuild">
   </Target>
-  -->
+  
 </Project>

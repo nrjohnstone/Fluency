@@ -48,3 +48,4 @@ tools/
 src/.vs/
 src/packages/
 *_NCrunch_*
+src/Fluency/Properties/AssemblyVersionInfo.cs
