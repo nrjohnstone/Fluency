@@ -180,13 +180,21 @@ namespace Fluency
 
         /// <summary>
         /// Gets the value the builder will create for the specified property.
+        /// If an explit value has not already been set, this will cause a default value
+        /// to be set for the property
         /// </summary>
         /// <typeparam name="TPropertyType">The type of the property type.</typeparam>
         /// <param name="propertyExpression">The property expression.</param>
         /// <returns></returns>
         public TPropertyType GetValue< TPropertyType >( Expression< Func< T, TPropertyType > > propertyExpression )
         {
-            return (TPropertyType)_properties[propertyExpression.GetPropertyInfo().Name];
+            var propertyName = propertyExpression.GetPropertyInfo().Name;
+            if (!_properties.Contains(propertyName))
+            {
+                _properties.Add(propertyName, GetDefaultValue(propertyExpression.GetPropertyInfo()));
+            }             
+
+            return (TPropertyType)_properties[propertyName];            
         }
 
 

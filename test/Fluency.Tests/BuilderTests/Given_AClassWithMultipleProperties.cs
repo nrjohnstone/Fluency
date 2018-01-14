@@ -55,6 +55,14 @@ namespace Fluency.Tests.BuilderTests
                 instance.PropertyASetterCalled.Should().Be(true);
                 instance.PropertyBSetterCalled.Should().Be(true);
             }
+
+            [Fact]
+            public void and_a_value_has_not_been_set_should_return_the_default_value()
+            {
+                var builder = new AClassWithTwoPropertiesBuilder();
+
+                builder.GetValue(x => x.PropertyA).Should().NotBeEmpty();
+            }
         }
 
         public class When_builder_is_configured_to_ignore_a_property : Given_AClassWithMultipleProperties
@@ -69,6 +77,16 @@ namespace Fluency.Tests.BuilderTests
 
                 instance.PropertyASetterCalled.Should().Be(true);
                 instance.PropertyBSetterCalled.Should().Be(false);
+            }
+
+            [Fact]
+            public void and_a_value_is_set_for_a_property_should_return_the_value()
+            {
+                var builder = new AClassWithTwoPropertiesBuilder();
+                builder.IgnoreProperty(x => x.PropertyB);
+                builder.SetProperty(x => x.PropertyB, "Foo");
+
+                builder.GetValue(x => x.PropertyB).Should().Be("Foo");
             }
         }
 
