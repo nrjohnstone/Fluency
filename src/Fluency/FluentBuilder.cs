@@ -34,6 +34,7 @@ namespace Fluency
         private readonly Dictionary< string, IFluentBuilder > _builders = new Dictionary< string, IFluentBuilder >();
         protected T _preBuiltResult;
         protected readonly ListDictionary _properties;
+        protected readonly HashSet<string> _ignoredProperties;
         private readonly IList< IDefaultConvention > _defaultConventions = new List< IDefaultConvention >();
         protected IIdGenerator IdGenerator;
 
@@ -45,8 +46,9 @@ namespace Fluency
         /// </summary>
         public FluentBuilder()
         {
-            IdGenerator = Fluency.Configuration.GetIdGenerator< T >();
+            IdGenerator = Fluency.Configuration.GetIdGenerator<T>();
             _defaultConventions = Fluency.Configuration.DefaultValueConventions;
+            _ignoredProperties = new HashSet<string>();
 
             _properties = new ListDictionary();
 
@@ -54,23 +56,10 @@ namespace Fluency
         }
 
         private void Initialize()
-        {
-            // Specify default values for each property based on conventions.
-            foreach ( var propertyInfo in typeof ( T ).GetProperties() )
-            {
-                // If the property is both Read and Write, set its value.
-                if ( propertyInfo.CanWrite && propertyInfo.CanRead )
-                {
-                    // Get the default value from the configured conventions and set the value.
-                    var defaultValue = GetDefaultValue( propertyInfo );
-                    _properties.Add( propertyInfo.Name, defaultValue );
-                }
-            }
-
+        {                                    
             // Allow the builder to specify its own default values.
             SetupDefaultValues();
         }
-
 
         #region IFluentBuilder<T> Members
 
@@ -89,18 +78,22 @@ namespace Fluency
             {
                 var propertyName = pair.Key;
                 var builder = pair.Value;
-
+                
                 var propertyValue = builder.InvokeMethod( "build" );
                 _properties[propertyName] = propertyValue;
             }
+            
+            ConfigureImplicitDefaultValues();
 
             // Allow the client builder the opportunity to do some pre-processing.
             BeforeBuilding();
 
             var result = GetNewInstance();
-            foreach ( DictionaryEntry entry in _properties )
-                result.SetProperty( entry.Key.ToString(), entry.Value );
-
+            foreach (DictionaryEntry entry in _properties)
+            {
+                result.SetProperty(entry.Key.ToString(), entry.Value);
+            }
+            
             // Alow the client builder the ability to do some post-processing.
             AfterBuilding( result );
 
@@ -110,6 +103,28 @@ namespace Fluency
             return result;
         }
 
+        private void ConfigureImplicitDefaultValues()
+        {
+            foreach (var propertyInfo in typeof(T).GetProperties())
+            {
+                if (PropertyIsAlreadySet(propertyInfo))
+                    continue;
+
+                if (IsIgnoredProperty(propertyInfo.Name))
+                    continue;
+                
+                if (propertyInfo.CanWrite && propertyInfo.CanRead)
+                {
+                    var defaultValue = GetDefaultValue(propertyInfo);
+                    _properties.Add(propertyInfo.Name, defaultValue);
+                }
+            }
+        }
+
+        private bool PropertyIsAlreadySet(PropertyInfo propertyInfo)
+        {
+            return _properties.Contains(propertyInfo.Name);
+        }
 
         protected virtual T GetNewInstance()
         {
@@ -236,11 +251,15 @@ namespace Fluency
                 throw new FluencyException("Cannot ignore property once a pre built result has been given. Property change will have no affect.");
 
             var property = propertyExpression.GetPropertyInfo();
-
-            _properties.Remove(property.Name);
+            _ignoredProperties.Add(property.Name);
+            
             return this;
         }
 
+        private bool IsIgnoredProperty(string propertyName)
+        {
+            return _ignoredProperties.Contains(propertyName);
+        }
         /// <summary>
         /// Mark a all properties to be ignored when setting of default values
         /// </summary>
@@ -250,7 +269,11 @@ namespace Fluency
             if (_preBuiltResult != null)
                 throw new FluencyException("Cannot ignore properties once a pre built result has been given. Property change will have no affect.");
 
-            _properties.Clear();
+            foreach (var propertyInfo in typeof(T).GetProperties())
+            {
+                _ignoredProperties.Add(propertyInfo.Name);
+            }
+            
             return this;
         }
 
@@ -264,15 +287,12 @@ namespace Fluency
                 throw new FluencyException("Cannot ignore properties once a pre built result has been given. Property change will have no affect.");
 
             foreach (var propertyInfo in typeof(T).GetProperties())
-            {
-                if (_properties.Contains(propertyInfo.Name))
+            {                
+                var methodInfo = propertyInfo.GetSetMethod(nonPublic: true);
+                if (!methodInfo.IsPublic)
                 {
-                    var methodInfo = propertyInfo.GetSetMethod(nonPublic: true);
-                    if (!methodInfo.IsPublic)
-                    {
-                        _properties.Remove(propertyInfo.Name);
-                    }
-                }
+                    _ignoredProperties.Add(propertyInfo.Name);
+                }                
             }
 
             return this;
