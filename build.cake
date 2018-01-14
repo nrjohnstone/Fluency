@@ -56,9 +56,10 @@ Task("Run-Unit-Tests")
 {
     var testAssemblies = GetFiles("./test/**/bin/" + configuration + "/*.Tests.dll");
     XUnit2(testAssemblies, new XUnit2Settings {
-        Parallelism = ParallelismOption.All,
+        Parallelism = ParallelismOption.None,
         HtmlReport = false,
-        NoAppDomain = true
+        NoAppDomain = true,
+        UseX86 = true
     });
 });
 
@@ -67,6 +68,7 @@ Task("Run-Unit-Tests")
 //////////////////////////////////////////////////////////////////////
 
 Task("Default")
+    .IsDependentOn("Clean")
     .IsDependentOn("Build")
     .IsDependentOn("Run-Unit-Tests");
     

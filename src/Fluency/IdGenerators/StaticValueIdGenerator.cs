@@ -1,11 +1,11 @@
 // Copyright 2011 Chris Edwards
-// 
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 //     http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -13,35 +13,35 @@
 // limitations under the License.
 namespace Fluency.IdGenerators
 {
-	/// <summary>
-	/// Generates all Ids as the same static value. Use zero for NHibernate classes since NHibernate creates the ids on its own.
-	/// </summary>
-	public class StaticValueIdGenerator : IIdGenerator
-	{
-		readonly int _staticIdValue;
+    /// <summary>
+    /// Generates all Ids as the same static value. Use zero for NHibernate classes since NHibernate creates the ids on its own.
+    /// </summary>
+    public class StaticValueIdGenerator : IIdGenerator
+    {
+        readonly int _staticIdValue;
 
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="StaticValueIdGenerator"/> class.
-		/// </summary>
-		/// <param name="staticIdValue">The static id value.</param>
-		public StaticValueIdGenerator( int staticIdValue )
-		{
-			_staticIdValue = staticIdValue;
-		}
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StaticValueIdGenerator"/> class.
+        /// </summary>
+        /// <param name="staticIdValue">The static id value.</param>
+        public StaticValueIdGenerator( int staticIdValue )
+        {
+            _staticIdValue = staticIdValue;
+        }
 
 
-		#region IIdGenerator Members
+        #region IIdGenerator Members
 
-		/// <summary>
-		/// Gets the next Id.
-		/// </summary>
-		/// <returns></returns>
-		public int GetNextId()
-		{
-			return _staticIdValue;
-		}
+        /// <summary>
+        /// Gets the next Id.
+        /// </summary>
+        /// <returns></returns>
+        public int GetNextId()
+        {
+            return _staticIdValue;
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

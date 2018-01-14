@@ -69,7 +69,7 @@ namespace Fluency.Tests.BuilderTests
             }
 
             [Fact]
-            public void It_Should_UseProvidedDateTime() => 
+            public void It_Should_UseProvidedDateTime() =>
                 _result.DateTimeProperty.Should().Be(_providedDateTime);
         }
 
@@ -206,7 +206,7 @@ namespace Fluency.Tests.BuilderTests
                 _firstExpectedValue = new TestClass { FirstName = "Bob", LastName = "Smith" };
                 _secondExpectedValue = new TestClass { FirstName = "Harry", LastName = "Johnson" };
 
-                _result = Sut.WithListOf(x => x.ListProperty, _firstExpectedValue, _secondExpectedValue).build();                
+                _result = Sut.WithListOf(x => x.ListProperty, _firstExpectedValue, _secondExpectedValue).build();
             }
 
             [Fact]

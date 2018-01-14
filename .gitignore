@@ -47,3 +47,4 @@ nCrunchTemp_*
 tools/
 src/.vs/
 src/packages/
+*_NCrunch_*
