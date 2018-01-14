@@ -20,6 +20,7 @@ branches:
   only:
   - master
   - refs/pull/*/merge
+  - /v\d\.\d\.\d/
 
 pull_requests:
   do_not_increment_build_number: true
