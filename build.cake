@@ -1,6 +1,7 @@
 #addin "Newtonsoft.Json"
 #addin "Cake.Powershell&version=0.3.5"
 #tool "nuget:?package=xunit.runner.console&version=2.2.0"
+#tool "nuget:?package=GitVersion.CommandLine"
 //////////////////////////////////////////////////////////////////////
 // ARGUMENTS
 //////////////////////////////////////////////////////////////////////
@@ -38,6 +39,26 @@ Task("Restore-NuGet-Packages")
     .Does(() =>
 {
     NuGetRestore(solutionFile);
+});
+
+
+Task("Pack-Nuget")
+    .Does(() => 
+{
+    EnsureDirectoryExists("./artifacts");
+    string version = GitVersion().NuGetVersion;
+    
+    var nugetPackageDir = Directory("./artifacts");
+
+    var nuGetPackSettings = new NuGetPackSettings
+    {   
+        Version                 = version,
+        OutputDirectory         = nugetPackageDir,
+        BasePath                = "src/Fluency/bin/" + configuration,
+        ArgumentCustomization   = args => args.Append("-Prop Configuration=" + configuration)
+    };
+
+    NuGetPack("src/Fluency/Fluency.nuspec", nuGetPackSettings);
 });
 
 

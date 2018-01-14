@@ -36,6 +36,7 @@ build:
 
 build_script:
 - ps: .\Build.ps1 -target Build -configuration Release
+- ps: .\Build.ps1 -target Pack-Nuget -configuration Release
 
 test_script:
 - ps: .\build.ps1 -target Run-Unit-Tests -Configuration Release
