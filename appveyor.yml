@@ -33,7 +33,7 @@ nuget:
   disable_publish_on_pr: true
 
 build:
-  publish_nuget: false
+  publish_nuget: true
 
 build_script:
 - ps: .\Build.ps1 -target Build -configuration Release
@@ -46,3 +46,11 @@ artifacts:
 - path: .\artifacts\**\*.nupkg
   name: NuGet
 
+deploy:
+- provider: NuGet
+  name: production
+  api_key:
+    secure: '2K5EQwNNYpt5GMRVKxHTihZO2MZCUSbsngmYo63XPO73UoX0n7INS/4OGIrZ3mMe'
+  on:
+    branch: master
+    appveyor_repo_tag: true
