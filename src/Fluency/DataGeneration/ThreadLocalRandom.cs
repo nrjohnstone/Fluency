@@ -1,6 +1,5 @@
-using System;
+﻿using System;
 using System.Threading;
-
 
 namespace Fluency.DataGeneration
 {
@@ -13,9 +12,9 @@ namespace Fluency.DataGeneration
         static ThreadLocalRandom()
         {
             // Generate as random a seed as possible by using a GUID (which includes many components that help it be more random than the default seed)
-            var guid = Guid.NewGuid().ToString( "N" ).Replace( "a", "" ).Replace( "b", "" ).Replace( "c", "" ).Replace( "d", "" ).Replace( "e", "" ).Replace( "f", "" );
-            var seed = int.Parse( guid.Substring( 0, 5 ) );
-            GlobalRandom = new Random( seed );
+            var guid = Guid.NewGuid().ToString("N").Replace("a", "").Replace("b", "").Replace("c", "").Replace("d", "").Replace("e", "").Replace("f", "");
+            var seed = int.Parse(guid.Substring(0, 5));
+            GlobalRandom = new Random(seed);
         }
 
 
@@ -31,7 +30,7 @@ namespace Fluency.DataGeneration
         /// <summary>
         /// Random number generator
         /// </summary>
-        static readonly ThreadLocal< Random > ThreadRandom = new ThreadLocal< Random >( NewRandom );
+        static readonly ThreadLocal<Random> ThreadRandom = new ThreadLocal<Random>(NewRandom);
 
 
         /// <summary>
@@ -41,11 +40,11 @@ namespace Fluency.DataGeneration
         /// </summary>
         static Random NewRandom()
         {
-            lock ( GlobalLock )
+            lock (GlobalLock)
             {
                 // Include threadId so that multiple appdomains don't get the same values.
-                var seed = GlobalRandom.Next() + ( AppDomain.CurrentDomain.Id ^ ( Thread.CurrentThread.ManagedThreadId + 1 ) );
-                return new Random( seed );
+                var seed = GlobalRandom.Next() + (AppDomain.CurrentDomain.Id ^ (Thread.CurrentThread.ManagedThreadId + 1));
+                return new Random(seed);
             }
         }
 

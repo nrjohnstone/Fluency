@@ -1,20 +1,6 @@
-// Copyright 2011 Chris Edwards
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-using System;
+﻿using System;
 using System.Reflection;
 using Fluency.DataGeneration;
-
 
 namespace Fluency.Conventions
 {
@@ -31,11 +17,11 @@ namespace Fluency.Conventions
         /// <param name="propertyName">The property name to match on.</param>
         /// <param name="defaultValue">The default value to provide when the property name matches.</param>
         /// <returns>The constructed <see cref="IDefaultConvention{T}"/></returns>
-        public static LambdaConvention< T > ByName< T >( string propertyName, Func< PropertyInfo, T > defaultValue )
+        public static LambdaConvention<T> ByName<T>(string propertyName, Func<PropertyInfo, T> defaultValue)
         {
-            return new LambdaConvention< T >(
-                    p => p.PropertyType == typeof ( T ) && p.Name.ToLower().Contains( propertyName.ToLower() ),
-                    defaultValue );
+            return new LambdaConvention<T>(
+                p => p.PropertyType == typeof(T) && p.Name.ToLower().Contains(propertyName.ToLower()),
+                defaultValue);
         }
 
 
@@ -46,11 +32,11 @@ namespace Fluency.Conventions
         /// <typeparam name="T">The type of property to match on.</typeparam>
         /// <param name="defaultValue">The default value to provide for matching properties.</param>
         /// <returns>The constructed <see cref="IDefaultConvention{T}"/></returns>
-        public static LambdaConvention< T > ByType< T >( Func< PropertyInfo, T > defaultValue )
+        public static LambdaConvention<T> ByType<T>(Func<PropertyInfo, T> defaultValue)
         {
-            return new LambdaConvention< T >(
-                    p => p.PropertyType == typeof ( T ),
-                    defaultValue );
+            return new LambdaConvention<T>(
+                p => p.PropertyType == typeof(T),
+                defaultValue);
         }
 
 
@@ -59,9 +45,9 @@ namespace Fluency.Conventions
         /// Assign a random first name when the property name contains "firstname" (case-insensitive)
         /// </summary>
         /// <returns>The constructed <see cref="IDefaultConvention{T}"/></returns>
-        public static IDefaultConvention< string > FirstName()
+        public static IDefaultConvention<string> FirstName()
         {
-            return ByName( "FirstName", p => ARandom.FirstName() );
+            return ByName("FirstName", p => ARandom.FirstName());
         }
 
 
@@ -71,9 +57,9 @@ namespace Fluency.Conventions
         /// </summary>
         /// <param name="length">The length of the string to create for the default value.</param>
         /// <returns>The constructed <see cref="IDefaultConvention{T}"/></returns>
-        public static IDefaultConvention< string > String( int length )
+        public static IDefaultConvention<string> String(int length)
         {
-            return ByType( p => ARandom.String( length ) );
+            return ByType(p => ARandom.String(length));
         }
 
 
@@ -82,9 +68,9 @@ namespace Fluency.Conventions
         /// Assign a random last name as when the property name contains "lastname" (case-insensitive).
         /// </summary>
         /// <returns>The constructed <see cref="IDefaultConvention{T}"/></returns>
-        public static IDefaultConvention< string > LastName()
+        public static IDefaultConvention<string> LastName()
         {
-            return ByName( "LastName", p => ARandom.LastName() );
+            return ByName("LastName", p => ARandom.LastName());
         }
 
 
@@ -93,9 +79,9 @@ namespace Fluency.Conventions
         /// Assign a random <see cref="DateTime"/> (with time component set to midnight) when the property type is <see cref="DateTime"/>.
         /// </summary>
         /// <returns>The constructed <see cref="IDefaultConvention{T}"/></returns>
-        public static IDefaultConvention< DateTime > DateType()
+        public static IDefaultConvention<DateTime> DateType()
         {
-            return ByType( p => ARandom.DateTime().Date );
+            return ByType(p => ARandom.DateTime().Date);
         }
 
 
@@ -104,9 +90,9 @@ namespace Fluency.Conventions
         /// Assign a random <see cref="int"/> when the property type is <see cref="int"/>.
         /// </summary>
         /// <returns>The constructed <see cref="IDefaultConvention{T}"/></returns>
-        public static IDefaultConvention< int > IntegerType()
+        public static IDefaultConvention<int> IntegerType()
         {
-            return ByType( p => ARandom.Int() );
+            return ByType(p => ARandom.Int());
         }
     }
 }

@@ -1,22 +1,8 @@
-// Copyright 2011 Chris Edwards
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
-using FluentNHibernate.Utils;
-
+using Fluency.Utils.Reflection;
 
 namespace Fluency.Utils
 {
@@ -29,9 +15,9 @@ namespace Fluency.Utils
         /// <typeparam name="T">The type of the class.</typeparam>
         /// <param name="propertyExpression">The property expression.</param>
         /// <returns></returns>
-        public static PropertyInfo GetPropertyInfo< TPropertyType, T >( this Expression< Func< T, IList< TPropertyType > > > propertyExpression ) where T : class
+        public static PropertyInfo GetPropertyInfo<TPropertyType, T>(this Expression<Func<T, IList<TPropertyType>>> propertyExpression) where T : class
         {
-            return ReflectionHelper.GetProperty( propertyExpression );
+            return ReflectionHelper.GetProperty(propertyExpression);
         }
 
 
@@ -42,9 +28,9 @@ namespace Fluency.Utils
         /// <typeparam name="T">The type of the class.</typeparam>
         /// <param name="propertyExpression">The property expression.</param>
         /// <returns></returns>
-        public static PropertyInfo GetPropertyInfo< TPropertyType, T >( this Expression< Func< T, TPropertyType > > propertyExpression ) where T : class
+        public static PropertyInfo GetPropertyInfo<TPropertyType, T>(this Expression<Func<T, TPropertyType>> propertyExpression) where T : class
         {
-            return ReflectionHelper.GetProperty( propertyExpression );
+            return ReflectionHelper.GetProperty(propertyExpression);
         }
     }
 }

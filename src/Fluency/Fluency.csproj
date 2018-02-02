@@ -1,137 +1,16 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{CA8DE273-AA4A-4FC1-9D41-B67B56A53433}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <TargetFrameworks>netstandard2.0;net45;net40</TargetFrameworks>
     <RootNamespace>Fluency</RootNamespace>
-    <AssemblyName>Fluency</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <OldToolsVersion>3.5</OldToolsVersion>
-    <UpgradeBackupLocation />
-    <PublishUrl>publish\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
-    <UseApplicationTrust>false</UseApplicationTrust>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkProfile />
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <DocumentationFile>bin\Debug\Fluency.xml</DocumentationFile>
+
+  <PropertyGroup>
+      <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\Fluency.xml</DocumentationFile>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Conventions\Convention.cs" />
-    <Compile Include="Conventions\DefaultConvention.cs" />
-    <Compile Include="Conventions\LambdaConvention.cs" />
-    <Compile Include="Conventions\IDefaultConvention.cs" />
-    <Compile Include="DataGeneration\ARandom.cs" />
-    <Compile Include="DataGeneration\CSharpDefaultValuesAndConstraints.cs" />
-    <Compile Include="DataGeneration\DefaultValues.cs" />
-    <Compile Include="DataGeneration\IDefaultValues.cs" />
-    <Compile Include="DataGeneration\IValueConstraints.cs" />
-    <Compile Include="DataGeneration\RandomData.cs" />
-    <Compile Include="DataGeneration\SqlServerDefaultValuesAndConstraints.cs" />
-    <Compile Include="DataGeneration\ThreadLocalRandom.cs" />
-    <Compile Include="DataGeneration\ValueConstraints.cs" />
-    <Compile Include="DataGeneration\WaffleEngine.cs" />
-    <Compile Include="DynamicFluentBuilder.cs" />
-    <Compile Include="Properties\AssemblyVersionInfo.cs" />
-    <Compile Include="Utils\NumericalExtensions.cs" />
-    <Compile Include="Fluency.cs" />
-    <Compile Include="FluencyConfiguration.cs" />
-    <Compile Include="FluencyException.cs" />
-    <Compile Include="IFluentListBuilder.cs" />
-    <Compile Include="InitializationExpression.cs" />
-    <Compile Include="IdGenerators\DecrementingIdGenerator.cs" />
-    <Compile Include="IdGenerators\IncrementingIdGenerator.cs" />
-    <Compile Include="IFluentBuilder.cs" />
-    <Compile Include="IdGenerators\IIdGenerator.cs" />
-    <Compile Include="FluentListBuilder.cs" />
-    <Compile Include="Probabilities\OutcomeSpecification.cs" />
-    <Compile Include="Probabilities\Probability.cs" />
-    <Compile Include="Probabilities\ProbabilitySpecification.cs" />
-    <Compile Include="Utils\IEnumerableExtensions.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utils\PropertyExpressionExtensions.cs" />
-    <Compile Include="Utils\ReflectionExtensions.cs" />
-    <Compile Include="FluentBuilder.cs" />
-    <Compile Include="IdGenerators\StaticValueIdGenerator.cs" />
-    <Compile Include="Utils\Reflection\Accessor.cs" />
-    <Compile Include="Utils\Reflection\DummyPropertyInfo.cs" />
-    <Compile Include="Utils\Reflection\ExpressionBuilder.cs" />
-    <Compile Include="Utils\Reflection\PropertyChain.cs" />
-    <Compile Include="Utils\Reflection\ReflectionHelper.cs" />
-    <Compile Include="Utils\Reflection\SingleProperty.cs" />
-    <Compile Include="Utils\StringExtensions.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
-      <Visible>False</Visible>
-      <ProductName>Windows Installer 3.1</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Fluency.nuspec">
-      <SubType>Designer</SubType>
-    </None>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets. -->
-  <Target Name="BeforeBuild">
-    <Copy Condition="!Exists('Properties\AssemblyVersionInfo.cs')" SourceFiles="$(SolutionDir)\AssemblyVersionInfo.template.cs" DestinationFiles="Properties\AssemblyVersionInfo.cs" />
+
+  <Target Name="BeforeBuild" BeforeTargets="Build">
+    <Copy Condition="!Exists('Properties\AssemblyVersionInfo.cs')" SourceFiles="$(SolutionDir)\src\AssemblyVersionInfo.template.cs" DestinationFiles="Properties\AssemblyVersionInfo.cs" />
   </Target>
-  <Target Name="AfterBuild">
-  </Target>
+
 </Project>

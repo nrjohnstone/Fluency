@@ -1,22 +1,8 @@
-// Copyright 2011 Chris Edwards
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-using System;
+﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using FluentNHibernate.Utils;
-
+using Fluency.Utils.Reflection;
 
 namespace Fluency.Utils
 {
@@ -27,14 +13,14 @@ namespace Fluency.Utils
         /// </summary>
         /// <param name="type">The type.</param>
         /// <returns></returns>
-        public static PropertyInfo[] GetPublicGetProperties( this Type type )
+        public static PropertyInfo[] GetPublicGetProperties(this Type type)
         {
-            return type.FindMembers( MemberTypes.Property,
-                                     BindingFlags.Public | BindingFlags.Instance,
-                                     ( m, f ) => ( (PropertyInfo)m ).CanRead,
-                                     null )
-                    .Cast< PropertyInfo >()
-                    .ToArray();
+            return type.FindMembers(MemberTypes.Property,
+                    BindingFlags.Public | BindingFlags.Instance,
+                    (m, f) => ((PropertyInfo)m).CanRead,
+                    null)
+                .Cast<PropertyInfo>()
+                .ToArray();
         }
 
 
@@ -43,14 +29,14 @@ namespace Fluency.Utils
         /// </summary>
         /// <param name="type">The type.</param>
         /// <returns></returns>
-        public static PropertyInfo[] GetPublicReadOnlyProperties( this Type type )
+        public static PropertyInfo[] GetPublicReadOnlyProperties(this Type type)
         {
-            return type.FindMembers( MemberTypes.Property,
-                                     BindingFlags.Public | BindingFlags.Instance,
-                                     ( m, f ) => ( (PropertyInfo)m ).CanRead && !( (PropertyInfo)m ).CanWrite,
-                                     null )
-                    .Cast< PropertyInfo >()
-                    .ToArray();
+            return type.FindMembers(MemberTypes.Property,
+                    BindingFlags.Public | BindingFlags.Instance,
+                    (m, f) => ((PropertyInfo)m).CanRead && !((PropertyInfo)m).CanWrite,
+                    null)
+                .Cast<PropertyInfo>()
+                .ToArray();
         }
 
 
@@ -62,9 +48,9 @@ namespace Fluency.Utils
         /// <param name="source">The source.</param>
         /// <param name="propertyExpression">The property expression.</param>
         /// <returns></returns>
-        public static PropertyInfo PropertyInfoFor< T, TPropertyType >( this T source, Expression< Func< T, TPropertyType > > propertyExpression )
+        public static PropertyInfo PropertyInfoFor<T, TPropertyType>(this T source, Expression<Func<T, TPropertyType>> propertyExpression)
         {
-            return ReflectionHelper.GetProperty( propertyExpression );
+            return ReflectionHelper.GetProperty(propertyExpression);
         }
 
 
@@ -74,10 +60,10 @@ namespace Fluency.Utils
         /// <param name="instance">The instance.</param>
         /// <param name="propertyName">Name of the property.</param>
         /// <param name="propertyValue">The property value.</param>
-        public static void SetProperty( this object instance, string propertyName, object propertyValue )
+        public static void SetProperty(this object instance, string propertyName, object propertyValue)
         {
-            PropertyInfo propertyInfo = instance.GetType().GetProperty( propertyName );
-            instance.SetProperty( propertyInfo, propertyValue );
+            PropertyInfo propertyInfo = instance.GetType().GetProperty(propertyName);
+            instance.SetProperty(propertyInfo, propertyValue);
         }
 
 
@@ -87,21 +73,21 @@ namespace Fluency.Utils
         /// <param name="instance">The instance.</param>
         /// <param name="propertyInfo">The property info.</param>
         /// <param name="propertyValue">The property value.</param>
-        public static void SetProperty( this object instance, PropertyInfo propertyInfo, object propertyValue )
+        public static void SetProperty(this object instance, PropertyInfo propertyInfo, object propertyValue)
         {
-            if ( propertyInfo == null )
-                throw new ArgumentNullException( "propertyInfo", "PropertyInfo cannot be null" );
+            if (propertyInfo == null)
+                throw new ArgumentNullException("propertyInfo", "PropertyInfo cannot be null");
 
             // Set the property value...throw meaningful error upon failure.
             try
             {
-                propertyInfo.SetValue( instance, propertyValue, null );
+                propertyInfo.SetValue(instance, propertyValue, null);
             }
-            catch ( Exception e )
+            catch (Exception e)
             {
-                throw new FluencyException( "Error occurred while setting default value for property [" +
-                                            instance.GetType().FullName + "." + propertyInfo.Name + "] to value [" + propertyValue + "]",
-                                            e );
+                throw new FluencyException("Error occurred while setting default value for property [" +
+                                           instance.GetType().FullName + "." + propertyInfo.Name + "] to value [" + propertyValue + "]",
+                    e);
             }
         }
 
@@ -113,10 +99,10 @@ namespace Fluency.Utils
         /// <param name="methodName">Name of the method.</param>
         /// <param name="parameters">The parameters.</param>
         /// <returns></returns>
-        public static object InvokeMethod( this object target, string methodName, params object[] parameters )
+        public static object InvokeMethod(this object target, string methodName, params object[] parameters)
         {
-            MethodInfo buildMethod = target.GetType().GetMethod( methodName );
-            return buildMethod.Invoke( target, parameters );
+            MethodInfo buildMethod = target.GetType().GetMethod(methodName);
+            return buildMethod.Invoke(target, parameters);
         }
 
 
@@ -125,17 +111,17 @@ namespace Fluency.Utils
         /// </summary>
         /// <param name="prototype">The prototype.</param>
         /// <returns></returns>
-        public static T ShallowClone< T >( this T prototype ) where T : new()
+        public static T ShallowClone<T>(this T prototype) where T : new()
         {
             // Create a new object to fill with all the property values in the prototype.
             var newObject = new T();
 
             // Copy all the property values from the prototype.
-            foreach ( PropertyInfo propertyInfo in typeof ( T ).GetProperties() )
+            foreach (PropertyInfo propertyInfo in typeof(T).GetProperties())
             {
                 // Only copy properties that are read-write (get/set).
-                if ( propertyInfo.CanRead && propertyInfo.CanWrite )
-                    propertyInfo.SetValue( newObject, propertyInfo.GetValue( prototype, null ), null );
+                if (propertyInfo.CanRead && propertyInfo.CanWrite)
+                    propertyInfo.SetValue(newObject, propertyInfo.GetValue(prototype, null), null);
             }
 
             // Return the new object.
@@ -151,11 +137,11 @@ namespace Fluency.Utils
         /// <param name="prototype">The prototype.</param>
         /// <param name="propertyExpression">The property expression.</param>
         /// <param name="propertyValue">The property value.</param>
-        public static void SetProperty< TPropertyType, T >( this T prototype, Expression< Func< T, TPropertyType > > propertyExpression, TPropertyType propertyValue )
-                where T : class, new()
+        public static void SetProperty<TPropertyType, T>(this T prototype, Expression<Func<T, TPropertyType>> propertyExpression, TPropertyType propertyValue)
+            where T : class, new()
         {
-            Accessor accessor = ReflectionHelper.GetAccessor( propertyExpression );
-            accessor.SetValue( prototype, propertyValue );
+            Accessor accessor = ReflectionHelper.GetAccessor(propertyExpression);
+            accessor.SetValue(prototype, propertyValue);
         }
 
 
@@ -167,11 +153,11 @@ namespace Fluency.Utils
         /// <param name="prototype">The prototype.</param>
         /// <param name="propertyExpression">The property expression.</param>
         /// <returns></returns>
-        public static TPropertyType GetProperty< TPropertyType, T >( this T prototype, Expression< Func< T, TPropertyType > > propertyExpression )
-                where T : class, new()
+        public static TPropertyType GetProperty<TPropertyType, T>(this T prototype, Expression<Func<T, TPropertyType>> propertyExpression)
+            where T : class, new()
         {
-            Accessor accessor = ReflectionHelper.GetAccessor( propertyExpression );
-            return (TPropertyType)accessor.GetValue( prototype );
+            Accessor accessor = ReflectionHelper.GetAccessor(propertyExpression);
+            return (TPropertyType)accessor.GetValue(prototype);
         }
     }
 }

@@ -1,22 +1,7 @@
-// Copyright 2011 Chris Edwards
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using Fluency.Utils;
-
 
 namespace Fluency.DataGeneration
 {
@@ -38,12 +23,12 @@ namespace Fluency.DataGeneration
         /// </summary>
         /// <param name="size">The size.</param>
         /// <returns></returns>
-        public static string String( int size )
+        public static string String(int size)
         {
             var builder = new StringBuilder();
-            for ( var i = 0; i < size; i++ )
-                    //26 letters in the alfabet, ascii + 65 for the capital letters
-                builder.Append( Convert.ToChar( Convert.ToInt32( Math.Floor( 26 * Random.NextDouble() + 65 ) ) ) );
+            for (var i = 0; i < size; i++)
+                //26 letters in the alfabet, ascii + 65 for the capital letters
+                builder.Append(Convert.ToChar(Convert.ToInt32(Math.Floor(26 * Random.NextDouble() + 65))));
             return builder.ToString();
         }
 
@@ -55,15 +40,15 @@ namespace Fluency.DataGeneration
         /// <param name="size">The size.</param>
         /// <param name="charactersToChooseFrom">The characters to choose from.</param>
         /// <returns></returns>
-        public static string StringFromCharacterSet( int size, string charactersToChooseFrom )
+        public static string StringFromCharacterSet(int size, string charactersToChooseFrom)
         {
-            if ( string.IsNullOrEmpty( charactersToChooseFrom ) )
-                throw new ArgumentNullException( "charactersToChooseFrom", "charactersToChooseFrom[] was null or empty. Cannot generate a string with no chars to choose from." );
+            if (string.IsNullOrEmpty(charactersToChooseFrom))
+                throw new ArgumentNullException("charactersToChooseFrom", "charactersToChooseFrom[] was null or empty. Cannot generate a string with no chars to choose from.");
 
             var characterArray = charactersToChooseFrom.ToCharArray();
-            var builder = new StringBuilder( size );
-            for ( var i = 0; i < size; i++ )
-                builder.Append( ItemFrom( characterArray ) );
+            var builder = new StringBuilder(size);
+            for (var i = 0; i < size; i++)
+                builder.Append(ItemFrom(characterArray));
             return builder.ToString();
         }
 
@@ -75,21 +60,21 @@ namespace Fluency.DataGeneration
         /// </summary>
         /// <param name="maxChars">The max chars.</param>
         /// <returns></returns>
-        public static string Text( int maxChars )
+        public static string Text(int maxChars)
         {
-            if ( maxChars < 1 )
-                throw new ArgumentOutOfRangeException( "maxChars", "maxChars must be greater than zero, but was [{0}]".format_using( maxChars ) );
+            if (maxChars < 1)
+                throw new ArgumentOutOfRangeException("maxChars", "maxChars must be greater than zero, but was [{0}]".format_using(maxChars));
 
             var sb = new StringBuilder();
-            var waffle = new WaffleEngine( Random );
+            var waffle = new WaffleEngine(Random);
 
             // Guess at a number of paragraphs to generate.
             const int numberOfCharactersPerParagraph = 80;
             var numberOfParagraphsToGenerate = maxChars / numberOfCharactersPerParagraph + 1;
 
-            waffle.TextWaffle( numberOfParagraphsToGenerate, false, sb );
+            waffle.TextWaffle(numberOfParagraphsToGenerate, false, sb);
 
-            return sb.ToString( 0, maxChars );
+            return sb.ToString(0, maxChars);
         }
 
 
@@ -98,15 +83,15 @@ namespace Fluency.DataGeneration
         /// </summary>
         /// <param name="maxChars">The max chars.</param>
         /// <returns></returns>
-        public static string Title( int maxChars )
+        public static string Title(int maxChars)
         {
-            if ( maxChars < 1 )
-                throw new ArgumentOutOfRangeException( "maxChars", "maxChars must be greater than zero, but was [{0}]".format_using( maxChars ) );
+            if (maxChars < 1)
+                throw new ArgumentOutOfRangeException("maxChars", "maxChars must be greater than zero, but was [{0}]".format_using(maxChars));
 
-            var waffle = new WaffleEngine( Random );
+            var waffle = new WaffleEngine(Random);
             var title = waffle.GenerateTitle();
-            if ( title.Length > maxChars )
-                title = title.Substring( 0, maxChars );
+            if (title.Length > maxChars)
+                title = title.Substring(0, maxChars);
             return title;
         }
 
@@ -119,28 +104,28 @@ namespace Fluency.DataGeneration
         /// </summary>
         /// <param name="pattern">The pattern.</param>
         /// <returns></returns>
-        public static string StringPattern( string pattern )
+        public static string StringPattern(string pattern)
         {
-            if ( pattern == null )
-                throw new ArgumentNullException( "pattern" );
+            if (pattern == null)
+                throw new ArgumentNullException("pattern");
 
             var output = "";
-            foreach ( var c in pattern )
+            foreach (var c in pattern)
             {
-                var randomizedPattern = GetRandomizedPatternChar( c );
+                var randomizedPattern = GetRandomizedPatternChar(c);
                 output += randomizedPattern;
             }
             return output;
         }
 
 
-        private static string GetRandomizedPatternChar( char c )
+        private static string GetRandomizedPatternChar(char c)
         {
-            switch ( c )
+            switch (c)
             {
                 case '9':
                 case '#':
-                    return IntBetween( 0, 9 ).ToString();
+                    return IntBetween(0, 9).ToString();
 
                 default:
                     return c.ToString();
@@ -163,7 +148,7 @@ namespace Fluency.DataGeneration
         /// <returns></returns>
         public static int Int()
         {
-            return IntBetween( 1, 9999 );
+            return IntBetween(1, 9999);
         }
 
 
@@ -176,7 +161,7 @@ namespace Fluency.DataGeneration
         /// <returns></returns>
         public static int PositiveInt()
         {
-            return IntBetween( 1, 9999 );
+            return IntBetween(1, 9999);
         }
 
 
@@ -186,20 +171,20 @@ namespace Fluency.DataGeneration
         /// <param name="min">The min.</param>
         /// <param name="max">The max.</param>
         /// <returns></returns>
-        public static int IntBetween( int min, int max )
+        public static int IntBetween(int min, int max)
         {
-            if ( !( min <= max ) )
-                throw new ArgumentException( "Min value must be less than or equal to Max value. Failed to generate a random int between {0} and {1}".format_using( min, max ) );
+            if (!(min <= max))
+                throw new ArgumentException("Min value must be less than or equal to Max value. Failed to generate a random int between {0} and {1}".format_using(min, max));
 
             // Guard against number greater than int.maxvalue
             var offset = -1;
-            if ( min == int.MinValue )
+            if (min == int.MinValue)
             {
                 // Guard against number smaller than int.minvalue
                 offset = 1;
 
                 // If doing this would cause us to violate int.maxvalue, cheat (will never generate minvalue).
-                if ( max == int.MaxValue )
+                if (max == int.MaxValue)
                 {
                     offset = -1;
                     min = min + 1;
@@ -211,7 +196,7 @@ namespace Fluency.DataGeneration
                 max += 1;
 
             // Use offset because Next() does not allow int.MaxValue as upper bounds.
-            var result = Random.Next( min + offset, max + offset );
+            var result = Random.Next(min + offset, max + offset);
             return result - offset;
         }
 
@@ -238,13 +223,13 @@ namespace Fluency.DataGeneration
         /// <param name="min">The min.</param>
         /// <param name="max">The max.</param>
         /// <returns></returns>
-        public static double DoubleBetween( double min, double max )
+        public static double DoubleBetween(double min, double max)
         {
-            if ( min > max )
-                throw new ArgumentException( "Min value must be less than Max value." );
+            if (min > max)
+                throw new ArgumentException("Min value must be less than Max value.");
 
             var range = max - min;
-            return min + ( range * Random.NextDouble() );
+            return min + (range * Random.NextDouble());
         }
 
 
@@ -260,7 +245,7 @@ namespace Fluency.DataGeneration
         /// <returns></returns>
         public static float Float()
         {
-            return (float)( Random.NextDouble() + Int() );
+            return (float)(Random.NextDouble() + Int());
         }
 
 
@@ -270,13 +255,13 @@ namespace Fluency.DataGeneration
         /// <param name="min">The min.</param>
         /// <param name="max">The max.</param>
         /// <returns></returns>
-        public static float FloatBetween( float min, float max )
+        public static float FloatBetween(float min, float max)
         {
-            if ( min > max )
-                throw new ArgumentException( "Min value must be less than Max value." );
+            if (min > max)
+                throw new ArgumentException("Min value must be less than Max value.");
 
             var range = max - min;
-            return min + ( range * (float)Random.NextDouble() );
+            return min + (range * (float)Random.NextDouble());
         }
 
 
@@ -293,7 +278,7 @@ namespace Fluency.DataGeneration
         /// <returns></returns>
         public static decimal CurrencyAmount()
         {
-            return IntBetween( 0, 999999999 ) + ( IntBetween( 0, 100 ) / 100 );
+            return IntBetween(0, 999999999) + (IntBetween(0, 100) / 100);
         }
 
 
@@ -305,9 +290,9 @@ namespace Fluency.DataGeneration
         /// </summary>
         /// <param name="maxAmount">The max amount.</param>
         /// <returns></returns>
-        public static decimal CurrencyAmountLessThan( int maxAmount )
+        public static decimal CurrencyAmountLessThan(int maxAmount)
         {
-            return IntBetween( 0, maxAmount - 1 ) + ( IntBetween( 0, 100 ) / 100 );
+            return IntBetween(0, maxAmount - 1) + (IntBetween(0, 100) / 100);
         }
 
 
@@ -321,9 +306,9 @@ namespace Fluency.DataGeneration
         /// <param name="minAmount">The min amount. </param>
         /// <param name="maxAmount">The max amount.</param>
         /// <returns></returns>
-        public static decimal CurrencyAmountBetween( int minAmount, int maxAmount )
+        public static decimal CurrencyAmountBetween(int minAmount, int maxAmount)
         {
-            return IntBetween( minAmount, maxAmount - 1 ) + ( IntBetween( 0, 100 ) / 100 );
+            return IntBetween(minAmount, maxAmount - 1) + (IntBetween(0, 100) / 100);
         }
 
 
@@ -339,15 +324,15 @@ namespace Fluency.DataGeneration
         /// <typeparam name="T"></typeparam>
         /// <param name="items">The items.</param>
         /// <returns></returns>
-        public static T ItemFrom< T >( IList< T > items )
+        public static T ItemFrom<T>(IList<T> items)
         {
-            if ( items == null )
-                throw new ArgumentNullException( "items", "items parameter was NULL. Cannot select a random item from a null list." );
+            if (items == null)
+                throw new ArgumentNullException("items", "items parameter was NULL. Cannot select a random item from a null list.");
 
-            if ( items.Count == 0 )
-                throw new ArgumentException( "items was an empty list. Cannot select a random item from an empty list.", "items" );
+            if (items.Count == 0)
+                throw new ArgumentException("items was an empty list. Cannot select a random item from an empty list.", "items");
 
-            return items[IntBetween( 0, items.Count - 1 )];
+            return items[IntBetween(0, items.Count - 1)];
         }
 
 
@@ -357,15 +342,15 @@ namespace Fluency.DataGeneration
         /// <typeparam name="T"></typeparam>
         /// <param name="items">The items.</param>
         /// <returns></returns>
-        public static T ItemFrom< T >( params T[] items )
+        public static T ItemFrom<T>(params T[] items)
         {
-            if ( items == null )
-                throw new ArgumentNullException( "items", "items parameter was NULL. Cannot select a random item from a null list." );
+            if (items == null)
+                throw new ArgumentNullException("items", "items parameter was NULL. Cannot select a random item from a null list.");
 
-            if ( items.Length == 0 )
-                throw new ArgumentException( "items was an empty list. Cannot select a random item from an empty list.", "items" );
+            if (items.Length == 0)
+                throw new ArgumentException("items was an empty list. Cannot select a random item from an empty list.", "items");
 
-            return ItemFrom< T >( new List< T >( items ) );
+            return ItemFrom<T>(new List<T>(items));
         }
 
 
@@ -374,15 +359,15 @@ namespace Fluency.DataGeneration
         /// </summary>
         /// <typeparam name="TEnumType"></typeparam>
         /// <returns></returns>
-        public static TEnumType EnumValue< TEnumType >()
+        public static TEnumType EnumValue<TEnumType>()
         {
-            if ( !typeof ( TEnumType ).IsSubclassOf( typeof ( Enum ) ) )
-                throw new ArgumentException( "Must be enum type." );
+            if (!typeof(TEnumType).IsSubclassOf(typeof(Enum)))
+                throw new ArgumentException("Must be enum type.");
 
-            var values = Enum.GetValues( typeof ( TEnumType ) );
+            var values = Enum.GetValues(typeof(TEnumType));
 
-            var randomArrayIndex = IntBetween( 0, values.Length - 1 );
-            return (TEnumType)values.GetValue( randomArrayIndex );
+            var randomArrayIndex = IntBetween(0, values.Length - 1);
+            return (TEnumType)values.GetValue(randomArrayIndex);
         }
 
 
@@ -399,7 +384,7 @@ namespace Fluency.DataGeneration
         /// <returns></returns>
         public static DateTime DateTime()
         {
-            return DateTimeBetween( _valueConstraints.MinDateTime, _valueConstraints.MaxDateTime );
+            return DateTimeBetween(_valueConstraints.MinDateTime, _valueConstraints.MaxDateTime);
         }
 
 
@@ -409,10 +394,10 @@ namespace Fluency.DataGeneration
         /// <param name="min">The min.</param>
         /// <param name="max">The max.</param>
         /// <returns></returns>
-        public static DateTime DateTimeBetween( DateTime min, DateTime max )
+        public static DateTime DateTimeBetween(DateTime min, DateTime max)
         {
-            if ( max <= min )
-                throw new ArgumentException( string.Format( "Max [{0}] must be greater than min [{1}].", max, min ) );
+            if (max <= min)
+                throw new ArgumentException(string.Format("Max [{0}] must be greater than min [{1}].", max, min));
 
             double startTick = min.Ticks;
             double endTick = max.Ticks;
@@ -420,10 +405,10 @@ namespace Fluency.DataGeneration
             var randomTickInRange = startTick + numberOfTicksInRange * Random.NextDouble();
 
             // Handle overrun...that might occur.
-            if ( randomTickInRange > System.DateTime.MaxValue.Ticks )
+            if (randomTickInRange > System.DateTime.MaxValue.Ticks)
                 randomTickInRange = System.DateTime.MaxValue.Ticks;
 
-            return new DateTime( Convert.ToInt64( randomTickInRange ) );
+            return new DateTime(Convert.ToInt64(randomTickInRange));
         }
 
 
@@ -432,9 +417,9 @@ namespace Fluency.DataGeneration
         /// </summary>
         /// <param name="upperBounds">The compare date time.</param>
         /// <returns></returns>
-        public static DateTime DateTimeBefore( DateTime upperBounds )
+        public static DateTime DateTimeBefore(DateTime upperBounds)
         {
-            return DateTimeBetween( _valueConstraints.MinDateTime, upperBounds );
+            return DateTimeBetween(_valueConstraints.MinDateTime, upperBounds);
         }
 
 
@@ -443,9 +428,9 @@ namespace Fluency.DataGeneration
         /// </summary>
         /// <param name="lowerBounds">The compare date time.</param>
         /// <returns></returns>
-        public static DateTime DateTimeAfter( DateTime lowerBounds )
+        public static DateTime DateTimeAfter(DateTime lowerBounds)
         {
-            return DateTimeBetween( lowerBounds, _valueConstraints.MaxDateTime );
+            return DateTimeBetween(lowerBounds, _valueConstraints.MaxDateTime);
         }
 
 
@@ -455,7 +440,7 @@ namespace Fluency.DataGeneration
         /// <returns></returns>
         public static DateTime DateTimeInPast()
         {
-            return DateTimeBefore( System.DateTime.Now );
+            return DateTimeBefore(System.DateTime.Now);
         }
 
 
@@ -465,12 +450,12 @@ namespace Fluency.DataGeneration
         /// </summary>
         /// <param name="lowerBounds">The start date.</param>
         /// <returns></returns>
-        public static DateTime DateTimeInPastSince( DateTime lowerBounds )
+        public static DateTime DateTimeInPastSince(DateTime lowerBounds)
         {
-            if ( lowerBounds >= System.DateTime.Now )
-                throw new ArgumentException( "The datetime must be in the past.", "lowerBounds" );
+            if (lowerBounds >= System.DateTime.Now)
+                throw new ArgumentException("The datetime must be in the past.", "lowerBounds");
 
-            return DateTimeBetween( lowerBounds, System.DateTime.Now );
+            return DateTimeBetween(lowerBounds, System.DateTime.Now);
         }
 
 
@@ -480,7 +465,7 @@ namespace Fluency.DataGeneration
         /// <returns></returns>
         public static DateTime DateTimeInPastYear()
         {
-            return DateTimeInPastSince( 1.YearsAgo() );
+            return DateTimeInPastSince(1.YearsAgo());
         }
 
 
@@ -490,7 +475,7 @@ namespace Fluency.DataGeneration
         /// <returns></returns>
         public static DateTime DateTimeInFuture()
         {
-            return DateTimeAfter( System.DateTime.Now );
+            return DateTimeAfter(System.DateTime.Now);
         }
 
 
@@ -515,19 +500,19 @@ namespace Fluency.DataGeneration
         /// <param name="startDate">The start date.</param>
         /// <param name="endDate">The end date.</param>
         /// <returns></returns>
-        public static DateTime DateBetween( DateTime startDate, DateTime endDate )
+        public static DateTime DateBetween(DateTime startDate, DateTime endDate)
         {
-            if ( DateTimeRangeDoesNotCrossDateBoundary( startDate, endDate ) )
+            if (DateTimeRangeDoesNotCrossDateBoundary(startDate, endDate))
             {
                 throw new FluencyException(
-                        "No valid date exists between the two supplied date time values. For a valid date to exist, there must be a midnight value between them (since technically a date without time is a datetime for midnight on the specified day)." );
+                        "No valid date exists between the two supplied date time values. For a valid date to exist, there must be a midnight value between them (since technically a date without time is a datetime for midnight on the specified day).");
             }
 
-            var result = DateTimeBetween( startDate, endDate ).Date;
+            var result = DateTimeBetween(startDate, endDate).Date;
 
             // Since start date includes time and result does not, stripping the time could make the result less than the start date. If so, just try again.
-            if ( result < startDate )
-                result = DateBetween( startDate, endDate );
+            if (result < startDate)
+                result = DateBetween(startDate, endDate);
 
             return result;
         }
@@ -538,12 +523,12 @@ namespace Fluency.DataGeneration
         /// </summary>
         /// <param name="lowerBounds">The compare date time.</param>
         /// <returns></returns>
-        public static DateTime DateAfter( DateTime lowerBounds )
+        public static DateTime DateAfter(DateTime lowerBounds)
         {
             // Don't include lower bound date.
-            var startDate = lowerBounds + TimeSpan.FromTicks( 1 );
+            var startDate = lowerBounds + TimeSpan.FromTicks(1);
 
-            return DateBetween( startDate, _valueConstraints.MaxDateTime );
+            return DateBetween(startDate, _valueConstraints.MaxDateTime);
         }
 
 
@@ -553,9 +538,9 @@ namespace Fluency.DataGeneration
         /// </summary>
         /// <param name="lowerBounds">The start date.</param>
         /// <returns></returns>
-        public static DateTime DateInPastSince( DateTime lowerBounds )
+        public static DateTime DateInPastSince(DateTime lowerBounds)
         {
-            return DateTimeInPastSince( lowerBounds ).Date;
+            return DateTimeInPastSince(lowerBounds).Date;
         }
 
 
@@ -565,7 +550,7 @@ namespace Fluency.DataGeneration
         /// <returns></returns>
         public static DateTime DateInPast()
         {
-            return DateTimeBefore( System.DateTime.Now ).Date;
+            return DateTimeBefore(System.DateTime.Now).Date;
         }
 
 
@@ -589,7 +574,7 @@ namespace Fluency.DataGeneration
         /// <returns></returns>
         public static decimal InterestRate()
         {
-            return (decimal)DoubleBetween( 0, 10 );
+            return (decimal)DoubleBetween(0, 10);
         }
 
 
@@ -602,7 +587,7 @@ namespace Fluency.DataGeneration
         /// <returns></returns>
         public static bool Boolean()
         {
-            return ItemFrom( true, false );
+            return ItemFrom(true, false);
         }
 
 
@@ -615,9 +600,9 @@ namespace Fluency.DataGeneration
         /// <returns></returns>
         public static string Email()
         {
-            return string.Format( "{0}@{1}",
-                                  String( 10 ),
-                                  InternetHostName() );
+            return string.Format("{0}@{1}",
+                                  String(10),
+                                  InternetHostName());
         }
 
 
@@ -629,21 +614,21 @@ namespace Fluency.DataGeneration
         /// <returns></returns>
         public static string HttpUrl()
         {
-            return string.Format( "http://{0}/{1}",
+            return string.Format("http://{0}/{1}",
                                   InternetHostName(),
-                                  UrlPathSegments() );
+                                  UrlPathSegments());
         }
 
 
         static string UrlPathSegments()
         {
-            var numSegments = IntBetween( 1, 5 );
+            var numSegments = IntBetween(1, 5);
 
             var pathSegments = new string[numSegments];
-            for ( int i = 0; i < numSegments; i++ )
-                pathSegments[i] = String( IntBetween( 4, 10 ) ).ToLower();
+            for (int i = 0; i < numSegments; i++)
+                pathSegments[i] = String(IntBetween(4, 10)).ToLower();
 
-            return string.Join( "/", pathSegments );
+            return string.Join("/", pathSegments);
         }
 
 
@@ -656,9 +641,9 @@ namespace Fluency.DataGeneration
         /// <returns></returns>
         public static string InternetHostName()
         {
-            return string.Format( "{0}.{1}.{2}",
-                                  ItemFrom( String( 5 ), "www", String( 4 ) ),
-                                  String( IntBetween( 3, 10 ) ),
+            return string.Format("{0}.{1}.{2}",
+                                  ItemFrom(String(5), "www", String(4)),
+                                  String(IntBetween(3, 10)),
                                   DomainSuffix()
                     ).ToLower();
         }
@@ -670,7 +655,7 @@ namespace Fluency.DataGeneration
         /// <returns></returns>
         public static string DomainSuffix()
         {
-            return ItemFrom( "com", "gov", "net", "org", "biz", "cc", "tv" );
+            return ItemFrom("com", "gov", "net", "org", "biz", "cc", "tv");
         }
 
 
@@ -684,7 +669,7 @@ namespace Fluency.DataGeneration
         /// <returns></returns>
         public static string FirstName()
         {
-            return ItemFrom( RandomData.FirstNames );
+            return ItemFrom(RandomData.FirstNames);
         }
 
 
@@ -695,7 +680,7 @@ namespace Fluency.DataGeneration
         /// <returns></returns>
         public static string LastName()
         {
-            return ItemFrom( RandomData.LastNames );
+            return ItemFrom(RandomData.LastNames);
         }
 
 
@@ -718,14 +703,14 @@ namespace Fluency.DataGeneration
 
         public static string AddressLine1()
         {
-            return string.Format( "{0} {1}",
-                                  IntBetween( 100, 9999 ),
-                                  StreetName() );
+            return string.Format("{0} {1}",
+                                  IntBetween(100, 9999),
+                                  StreetName());
         }
 
         public static string StreetName()
         {
-            return ItemFrom( RandomData.Streets );
+            return ItemFrom(RandomData.Streets);
         }
 
 
@@ -736,7 +721,7 @@ namespace Fluency.DataGeneration
         /// <returns></returns>
         public static string StateName()
         {
-            return ItemFrom( RandomData.States );
+            return ItemFrom(RandomData.States);
         }
 
 
@@ -747,7 +732,7 @@ namespace Fluency.DataGeneration
         /// <returns></returns>
         public static string StateCode()
         {
-            return ItemFrom( RandomData.StateCodes );
+            return ItemFrom(RandomData.StateCodes);
         }
 
 
@@ -758,7 +743,7 @@ namespace Fluency.DataGeneration
         /// <returns></returns>
         public static string City()
         {
-            return ItemFrom( RandomData.Cities );
+            return ItemFrom(RandomData.Cities);
         }
 
 
@@ -769,7 +754,7 @@ namespace Fluency.DataGeneration
         /// <returns></returns>
         public static string ZipCode()
         {
-            return StringPattern( "99999" );
+            return StringPattern("99999");
         }
 
 
@@ -785,7 +770,7 @@ namespace Fluency.DataGeneration
         /// <returns></returns>
         public static int Age()
         {
-            return IntBetween( 1, 100 );
+            return IntBetween(1, 100);
         }
 
 
@@ -795,7 +780,7 @@ namespace Fluency.DataGeneration
         /// <returns></returns>
         public static int AdultAge()
         {
-            return IntBetween( 21, 65 );
+            return IntBetween(21, 65);
         }
 
 
@@ -806,7 +791,7 @@ namespace Fluency.DataGeneration
         /// <returns></returns>
         public static DateTime BirthDate()
         {
-            return DateTimeBetween( 75.YearsAgo(), 5.YearsAgo() ).Date;
+            return DateTimeBetween(75.YearsAgo(), 5.YearsAgo()).Date;
         }
 
 
@@ -815,21 +800,21 @@ namespace Fluency.DataGeneration
         /// </summary>
         /// <param name="age">The age. (between 1 and 1000</param>
         /// <returns></returns>
-        public static DateTime BirthDateForAge( int age )
+        public static DateTime BirthDateForAge(int age)
         {
-            if ( age < 1 || age > 1000 )
-                throw new ArgumentOutOfRangeException( "age", "Age is out of range. Should be between 1 and 1000 (yeah, 1000 is large, but age of  building?)" );
+            if (age < 1 || age > 1000)
+                throw new ArgumentOutOfRangeException("age", "Age is out of range. Should be between 1 and 1000 (yeah, 1000 is large, but age of  building?)");
 
             var latestPossibleBirthday = age.YearsAgo().Date;
-            var earliestPossibleBirthday = ( age + 1 ).YearsAgo().Date.AddDays( 1 ); // Without this extra day, would be too old.
-            return DateBetween( earliestPossibleBirthday, latestPossibleBirthday );
+            var earliestPossibleBirthday = (age + 1).YearsAgo().Date.AddDays(1); // Without this extra day, would be too old.
+            return DateBetween(earliestPossibleBirthday, latestPossibleBirthday);
         }
 
 
         #endregion
 
 
-        private static bool DateTimeRangeDoesNotCrossDateBoundary( DateTime startDate, DateTime endDate )
+        private static bool DateTimeRangeDoesNotCrossDateBoundary(DateTime startDate, DateTime endDate)
         {
             var bothOnSameDay = startDate.Date == endDate.Date;
             var neitherAreMidnight = startDate != startDate.Date && endDate != endDate.Date;

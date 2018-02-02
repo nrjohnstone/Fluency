@@ -1,24 +1,8 @@
-// Copyright 2011 Chris Edwards
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-using System;
+﻿using System;
 using System.Globalization;
 using System.Reflection;
 
-// Copied from FluentNHibernate source to remove dependency on FluentNHibernate. Need to remove dependency on this code.
-
-
-namespace FluentNHibernate
+namespace Fluency.Utils.Reflection
 {
     public sealed class DummyPropertyInfo : PropertyInfo
     {
@@ -26,53 +10,53 @@ namespace FluentNHibernate
         readonly Type type;
 
 
-        public DummyPropertyInfo( string name, Type type )
+        public DummyPropertyInfo(string name, Type type)
         {
-            if ( name == null ) throw new ArgumentNullException( "name" );
-            if ( type == null ) throw new ArgumentNullException( "type" );
+            if (name == null) throw new ArgumentNullException("name");
+            if (type == null) throw new ArgumentNullException("type");
 
             this.name = name;
             this.type = type;
         }
 
 
-        public override object[] GetCustomAttributes( bool inherit )
+        public override object[] GetCustomAttributes(bool inherit)
         {
             throw new NotImplementedException();
         }
 
 
-        public override bool IsDefined( Type attributeType, bool inherit )
+        public override bool IsDefined(Type attributeType, bool inherit)
         {
             throw new NotImplementedException();
         }
 
 
-        public override object GetValue( object obj, BindingFlags invokeAttr, Binder binder, object[] index, CultureInfo culture )
+        public override object GetValue(object obj, BindingFlags invokeAttr, Binder binder, object[] index, CultureInfo culture)
         {
             throw new NotImplementedException();
         }
 
 
-        public override void SetValue( object obj, object value, BindingFlags invokeAttr, Binder binder, object[] index, CultureInfo culture )
+        public override void SetValue(object obj, object value, BindingFlags invokeAttr, Binder binder, object[] index, CultureInfo culture)
         {
             throw new NotImplementedException();
         }
 
 
-        public override MethodInfo[] GetAccessors( bool nonPublic )
+        public override MethodInfo[] GetAccessors(bool nonPublic)
         {
             throw new NotImplementedException();
         }
 
 
-        public override MethodInfo GetGetMethod( bool nonPublic )
+        public override MethodInfo GetGetMethod(bool nonPublic)
         {
             throw new NotImplementedException();
         }
 
 
-        public override MethodInfo GetSetMethod( bool nonPublic )
+        public override MethodInfo GetSetMethod(bool nonPublic)
         {
             throw new NotImplementedException();
         }
@@ -120,7 +104,7 @@ namespace FluentNHibernate
         }
 
 
-        public override object[] GetCustomAttributes( Type attributeType, bool inherit )
+        public override object[] GetCustomAttributes(Type attributeType, bool inherit)
         {
             throw new NotImplementedException();
         }

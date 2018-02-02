@@ -1,6 +1,8 @@
 #addin "Newtonsoft.Json"
-#addin "Cake.Powershell&version=0.3.5"
-#tool "nuget:?package=xunit.runner.console&version=2.2.0"
+#addin "Cake.Powershell"
+#addin "Cake.Incubator"
+#tool "nuget:?package=xunit.runner.console&version=2.3.0"
+#tool "nuget:?package=NUnit.ConsoleRunner&version=3.8.0"
 #tool "nuget:?package=GitVersion.CommandLine"
 //////////////////////////////////////////////////////////////////////
 // ARGUMENTS
@@ -15,7 +17,7 @@ var verbosity = Argument<string>("verbosity", "Minimal");
 //////////////////////////////////////////////////////////////////////
 
 // Define directories.
-var solutionDir = Directory("./src");
+var solutionDir = Directory("./");
 var solutionFile = solutionDir + File("Fluency.NET.sln");
 var buildDir = solutionDir + Directory("bin") + Directory(configuration);
 
@@ -27,10 +29,12 @@ var buildDir = solutionDir + Directory("bin") + Directory(configuration);
 Task("Clean")
     .Does(() =>
 {
-    var path = solutionDir.Path;
-    Information("Cleaning build output", path);
-    CleanDirectories(path + "/**/bin/" + configuration);
-    CleanDirectories(path + "/**/obj/" + configuration);
+    var settings = new DotNetCoreCleanSettings
+     {         
+         Configuration = configuration      
+     };
+
+    DotNetCoreClean(solutionFile, settings);
 });
 
 
@@ -61,54 +65,76 @@ Task("Update-Version")
 
 
 Task("Restore-NuGet-Packages")
-    .IsDependentOn("Clean")
     .Does(() =>
 {
-    NuGetRestore(solutionFile);
+    DotNetCoreBuild(solutionFile);    
 });
 
 
 Task("Pack-Nuget")
     .Does(() => 
 {
-    EnsureDirectoryExists("./artifacts");
-    string version = GitVersion().NuGetVersion;
-    
     var nugetPackageDir = Directory("./artifacts");
-
-    var nuGetPackSettings = new NuGetPackSettings
-    {   
-        Version                 = version,
-        OutputDirectory         = nugetPackageDir,
-        BasePath                = "src/Fluency/bin/" + configuration,
-        ArgumentCustomization   = args => args.Append("-Prop Configuration=" + configuration)
+    EnsureDirectoryExists(nugetPackageDir);
+    
+    var version = GitVersion();
+    var settings = new DotNetCorePackSettings
+    {
+        ArgumentCustomization = args=>args.Append("/p:PackageVersion=" + version.NuGetVersionV2),
+        Configuration = configuration,
+        OutputDirectory = nugetPackageDir,
+        NoRestore = true,
+        IncludeSymbols = true
     };
 
-    NuGetPack("src/Fluency/Fluency.nuspec", nuGetPackSettings);
+    DotNetCorePack("src/Fluency/Fluency.csproj", settings);
 });
 
 
 Task("Build")
-    .IsDependentOn("Restore-NuGet-Packages")
     .IsDependentOn("Update-Version")
     .Does(() =>
 {
-    MSBuild(solutionFile, settings => settings
-        .SetConfiguration(configuration)
-        .SetVerbosity(Verbosity.Quiet));
+    var settings = new DotNetCoreBuildSettings
+    {
+        Configuration = configuration      
+    };
+
+    DotNetCoreBuild("./Fluency.NET.sln", settings);
 });
 
 
 Task("Run-Unit-Tests")
     .Does(() =>
 {
-    var testAssemblies = GetFiles("./test/**/bin/" + configuration + "/*.Tests.dll");
-    XUnit2(testAssemblies, new XUnit2Settings {
+    var testAssemblies = GetFiles("./test/**/*.csproj");
+
+    // Disable parallel test runs due to static configuration in Fluency
+    var netCoreTestSettings = new DotNetCoreTestSettings() {
+        ArgumentCustomization = args => args.Append("-p:ParallelizeTestCollections=false"),
+        Configuration = configuration,
+        NoBuild = true,
+        NoRestore = true
+    };
+
+    var netCoreXunitTestSettings = new XUnit2Settings {
+            Parallelism = ParallelismOption.None,
+            HtmlReport = false,
+            UseX86 = true
+    };
+
+    DotNetCoreTest(netCoreTestSettings, "./test/Fluency.Net.Standard.Tests/Fluency.Net.Standard.Tests.csproj", netCoreXunitTestSettings);
+
+    var netStandardXunitSettings = new XUnit2Settings {
         Parallelism = ParallelismOption.None,
         HtmlReport = false,
         NoAppDomain = true,
         UseX86 = true
-    });
+    };
+
+    NUnit3("./test/Fluency.Net.Framework.40.Tests/bin/" + configuration + "/Fluency.Net.Framework.40.Tests.dll",
+        new NUnit3Settings { NoResults = true });
+    XUnit2("./test/Fluency.Net.Framework.461.Tests/bin/" + configuration + "/Fluency.Net.Framework.461.Tests.dll", netStandardXunitSettings);
 });
 
 //////////////////////////////////////////////////////////////////////
