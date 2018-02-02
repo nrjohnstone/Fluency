@@ -92,6 +92,7 @@ Task("Pack-Nuget")
 
 
 Task("Build")
+    .IsDependentOn("Restore-NuGet-Packages")
     .IsDependentOn("Update-Version")
     .Does(() =>
 {
