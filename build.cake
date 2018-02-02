@@ -67,7 +67,8 @@ Task("Update-Version")
 Task("Restore-NuGet-Packages")
     .Does(() =>
 {
-    DotNetCoreBuild(solutionFile);    
+    DotNetCoreRestore(solutionFile);
+    NuGetRestore(solutionFile);        
 });
 
 
