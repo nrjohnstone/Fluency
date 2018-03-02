@@ -11,31 +11,25 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-using NUnit.Framework;
+
+using FluentAssertions;
 using SampleApplication.Domain;
+using SampleApplication.Tests.FluentBuilders;
+using Xunit;
 
 
-namespace SampleApplication.Tests.IntegrationTests
+namespace SampleApplication.Tests.UnitTests.FluentBuilders
 {
-    [ TestFixture ]
-    public class ObjectMotherTests : AutoRollbackDatabaseTest
+    public class EmployeeBuilderTests
     {
-        readonly Anonymous a = new Anonymous();
-
-
-        protected override void TestSetUp()
+        [ Fact ]
+        public void Build_creates_anonymous_Employee()
         {
-            Order order = a.Order();
-            LineItem lineItem1 = a.LineItem_ForOrder( order, 1, 1.60 );
-            LineItem lineItem2 = a.LineItem_ForOrder( order, 10, 25.99 );
-        }
+            Customer customer = new CustomerBuilder().build();
 
-
-        [ Test ]
-        [ Ignore( "This is a sample...not meant to run" ) ]
-        public void SomeTest()
-        {
-            // Test with Db.
+            customer.Should().NotBeNull();
+            customer.FirstName.Should().NotBeNullOrWhiteSpace();
+            customer.LastName.Should().NotBeNullOrWhiteSpace();
         }
     }
 }

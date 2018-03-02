@@ -14,16 +14,14 @@
 
 using System;
 using FluentAssertions;
-using NUnit.Framework;
 using SampleApplication.Domain;
+using Xunit;
 
-namespace SampleApplication.Tests.IntegrationTests
+namespace SampleApplication.Tests.UnitTests.FluentBuilders
 {
-    [ TestFixture ]
     public class ManualObjectCreationTests
     {
-        [ Test ]
-        [ Ignore( "This is a sample...not meant to run" ) ]
+        [ Fact ]
         public void OrderTotalShouldBeTheSumOfTheLineItems()
         {
             // Arrange.

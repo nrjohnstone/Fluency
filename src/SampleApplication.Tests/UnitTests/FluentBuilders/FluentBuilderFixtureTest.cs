@@ -13,17 +13,14 @@
 // limitations under the License.
 
 using FluentAssertions;
-using NUnit.Framework;
 using SampleApplication.Tests.FluentBuilders;
+using Xunit;
 
-
-
-namespace SampleApplication.Tests.IntegrationTests
+namespace SampleApplication.Tests.UnitTests.FluentBuilders
 {
-    [ TestFixture ]
     public class FluentBuilderFixtureTest
     {
-        [ Test ]
+        [ Fact ]
         public void OrderTotalShouldBeTheSumOfTheLineItems()
         {
             // Arrange.
