@@ -13,22 +13,21 @@
 // limitations under the License.
 using Fluency.Utils;
 using FluentAssertions;
-using NUnit.Framework;
 using SampleApplication.Domain;
 using SampleApplication.Tests.FluentBuilders;
+using Xunit;
 
 namespace SampleApplication.Tests.UnitTests.Domain.OrderTests
 {
-    [ TestFixture ]
     public class When_getting_the_total_order_amount
     {
-        [ Test ]
+        [Fact]
         public void For_a_single_line_item_Should_return_the_amount_for_that_line_item()
         {
-            Order order = an.Order.With( a.LineItem.Costing( 10.dollars() ) )
-                    .build();
+            Order order = an.Order.With(a.LineItem.Costing(10.dollars()))
+                .build();
 
-            order.TotalAmount.Should().Be( 10.dollars() );
+            order.TotalAmount.Should().Be(10.dollars());
         }
     }
 }
