@@ -11,20 +11,24 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-using Fluency;
-using Fluency.DataGeneration;
+using Fluency.Utils;
+using FluentAssertions;
+using NUnit.Framework;
 using SampleApplication.Domain;
+using SampleApplication.Tests.FluentBuilders;
 
-
-namespace SampleApplication.Tests.FluentBuilders
+namespace SampleApplication.Tests.UnitTests.Domain.OrderTests
 {
-    public class CustomerBuilder : FluentBuilder< Customer >
+    [ TestFixture ]
+    public class When_getting_the_total_order_amount
     {
-        protected override void SetupDefaultValues()
+        [ Test ]
+        public void For_a_single_line_item_Should_return_the_amount_for_that_line_item()
         {
-            SetProperty( x => x.Id, GenerateNewId() );
-            SetProperty( x => x.FirstName, ARandom.FirstName() );
-            SetProperty( x => x.LastName, ARandom.LastName() );
+            Order order = an.Order.With( a.LineItem.Costing( 10.dollars() ) )
+                    .build();
+
+            order.TotalAmount.Should().Be( 10.dollars() );
         }
     }
 }

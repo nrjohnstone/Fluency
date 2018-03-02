@@ -11,20 +11,25 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-using Fluency;
-using Fluency.DataGeneration;
-using SampleApplication.Domain;
+using NUnit.Framework;
 
 
-namespace SampleApplication.Tests.FluentBuilders
+namespace SampleApplication.Tests.IntegrationTests
 {
-    public class CustomerBuilder : FluentBuilder< Customer >
+    [ TestFixture ]
+    public class BigFrigginInsertTest : AutoRollbackDatabaseTest
     {
-        protected override void SetupDefaultValues()
+        protected override void TestSetUp()
         {
-            SetProperty( x => x.Id, GenerateNewId() );
-            SetProperty( x => x.FirstName, ARandom.FirstName() );
-            SetProperty( x => x.LastName, ARandom.LastName() );
+            TestData.InsertTestData( _session );
+        }
+
+
+        [ Test ]
+        [ Ignore( "This is a sample...not meant to run" ) ]
+        public void TestSomething()
+        {
+            // Test using the db.
         }
     }
 }

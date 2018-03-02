@@ -11,20 +11,24 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-using Fluency;
-using Fluency.DataGeneration;
+using NUnit.Framework;
 using SampleApplication.Domain;
+using SampleApplication.Tests.FluentBuilders;
 
 
-namespace SampleApplication.Tests.FluentBuilders
+namespace SampleApplication.Tests.UnitTests.FluentBuilders
 {
-    public class CustomerBuilder : FluentBuilder< Customer >
+    [ TestFixture ]
+    public class EmployeeBuilderTests
     {
-        protected override void SetupDefaultValues()
+        [ Test ]
+        public void Build_creates_anonymous_Employee()
         {
-            SetProperty( x => x.Id, GenerateNewId() );
-            SetProperty( x => x.FirstName, ARandom.FirstName() );
-            SetProperty( x => x.LastName, ARandom.LastName() );
+            Customer customer = new CustomerBuilder().build();
+
+            Assert.IsNotNull( customer );
+            Assert.IsNotNullOrEmpty( customer.FirstName );
+            Assert.IsNotNullOrEmpty( customer.LastName );
         }
     }
 }

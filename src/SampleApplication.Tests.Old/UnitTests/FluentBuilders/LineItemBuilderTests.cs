@@ -11,20 +11,24 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-using Fluency;
-using Fluency.DataGeneration;
+using NUnit.Framework;
 using SampleApplication.Domain;
+using SampleApplication.Tests.FluentBuilders;
 
 
-namespace SampleApplication.Tests.FluentBuilders
+namespace SampleApplication.Tests.UnitTests.FluentBuilders
 {
-    public class CustomerBuilder : FluentBuilder< Customer >
+    [ TestFixture ]
+    public class LineItemBuilderTests
     {
-        protected override void SetupDefaultValues()
+        [ Test ]
+        public void Specifying_a_ProductBuilder_should_use_that_ProductBuilder_to_return_the_result()
         {
-            SetProperty( x => x.Id, GenerateNewId() );
-            SetProperty( x => x.FirstName, ARandom.FirstName() );
-            SetProperty( x => x.LastName, ARandom.LastName() );
+            Product product = a.Product.build();
+
+            LineItem lineItem = a.LineItem.For( a.Product.AliasFor( product ) ).build();
+
+            Assert.AreSame( product, lineItem.Product );
         }
     }
 }

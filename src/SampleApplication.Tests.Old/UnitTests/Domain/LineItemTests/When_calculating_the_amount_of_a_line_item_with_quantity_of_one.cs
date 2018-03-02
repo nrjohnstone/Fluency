@@ -11,20 +11,25 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-using Fluency;
-using Fluency.DataGeneration;
+using Fluency.Utils;
+using FluentAssertions;
+using NUnit.Framework;
 using SampleApplication.Domain;
+using SampleApplication.Tests.FluentBuilders;
 
 
-namespace SampleApplication.Tests.FluentBuilders
+namespace SampleApplication.Tests.UnitTests.Domain.LineItemTests
 {
-    public class CustomerBuilder : FluentBuilder< Customer >
+    [ TestFixture ]
+    public class When_calculating_the_amount_of_a_line_item_with_quantity_of_one
     {
-        protected override void SetupDefaultValues()
+        [ Test ]
+        public void Should_be_equal_to_the_unit_price_of_the_item()
         {
-            SetProperty( x => x.Id, GenerateNewId() );
-            SetProperty( x => x.FirstName, ARandom.FirstName() );
-            SetProperty( x => x.LastName, ARandom.LastName() );
+            LineItem lineItem = a.LineItem.WithQuantity( 1 ).And.UnitPriceOf( 5.dollars() )
+                    .build();
+
+            lineItem.Amount.Should().Be( 5.dollars() );
         }
     }
 }
