@@ -19,6 +19,8 @@ image: Visual Studio 2017
 branches:
   only:
   - master
+  - develop
+  - feature/.*
   - refs/pull/*/merge
   - /v\d\.\d\.\d/
 

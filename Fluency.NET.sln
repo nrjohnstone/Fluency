@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2026
+VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fluency", "src\Fluency\Fluency.csproj", "{6C54078E-F726-4007-BD92-27D1058E5FE0}"
 EndProject
@@ -10,6 +10,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fluency.Net.Framework.461.Tests", "test\Fluency.Net.Framework.461.Tests\Fluency.Net.Framework.461.Tests.csproj", "{9E6DF30C-D678-4262-974A-DDF8E6D4EF58}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fluency.Net.Framework.40.Tests", "test\Fluency.Net.Framework.40.Tests\Fluency.Net.Framework.40.Tests.csproj", "{0A353DD9-575C-4872-B88A-196B015B744B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleApplication", "src\SampleApplication\SampleApplication.csproj", "{05721375-5153-4825-BC23-43A92CCBA616}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleApplication.Tests", "test\SampleApplication.Tests\SampleApplication.Tests.csproj", "{379C204E-F8FA-42DE-9855-D74C63EAEE13}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +37,14 @@ Global
 		{0A353DD9-575C-4872-B88A-196B015B744B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A353DD9-575C-4872-B88A-196B015B744B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0A353DD9-575C-4872-B88A-196B015B744B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05721375-5153-4825-BC23-43A92CCBA616}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05721375-5153-4825-BC23-43A92CCBA616}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05721375-5153-4825-BC23-43A92CCBA616}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05721375-5153-4825-BC23-43A92CCBA616}.Release|Any CPU.Build.0 = Release|Any CPU
+		{379C204E-F8FA-42DE-9855-D74C63EAEE13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{379C204E-F8FA-42DE-9855-D74C63EAEE13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{379C204E-F8FA-42DE-9855-D74C63EAEE13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{379C204E-F8FA-42DE-9855-D74C63EAEE13}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
