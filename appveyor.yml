@@ -20,7 +20,7 @@ branches:
   only:
   - master
   - develop
-  - feature/*
+  - feature/.*
   - refs/pull/*/merge
   - /v\d\.\d\.\d/
 
