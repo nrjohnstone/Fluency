@@ -6,6 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentAssertions" Version="4.19.4" />
+    <PackageReference Include="xunit" Version="2.3.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Fluency\Fluency.csproj" />
     <ProjectReference Include="..\SampleApplication\SampleApplication.csproj" />
   </ItemGroup>
