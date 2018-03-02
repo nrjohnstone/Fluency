@@ -137,7 +137,7 @@ Task("Run-Unit-Tests")
     NUnit3("./test/Fluency.Net.Framework.40.Tests/bin/" + configuration + "/Fluency.Net.Framework.40.Tests.dll",
         new NUnit3Settings { NoResults = true });
     XUnit2("./test/Fluency.Net.Framework.461.Tests/bin/" + configuration + "/Fluency.Net.Framework.461.Tests.dll", netStandardXunitSettings);
-    DotNetCoreTest(netCoreTestSettings, "./src/SampleApplication.Tests/SampleApplication.Tests.csproj", netCoreXunitTestSettings);
+    DotNetCoreTest(netCoreTestSettings, "./test/SampleApplication.Tests/SampleApplication.Tests.csproj", netCoreXunitTestSettings);
 });
 
 //////////////////////////////////////////////////////////////////////

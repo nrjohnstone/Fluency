@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fluency.Net.Framework.40.Te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleApplication", "src\SampleApplication\SampleApplication.csproj", "{05721375-5153-4825-BC23-43A92CCBA616}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleApplication.Tests", "src\SampleApplication.Tests\SampleApplication.Tests.csproj", "{379C204E-F8FA-42DE-9855-D74C63EAEE13}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleApplication.Tests", "test\SampleApplication.Tests\SampleApplication.Tests.csproj", "{379C204E-F8FA-42DE-9855-D74C63EAEE13}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

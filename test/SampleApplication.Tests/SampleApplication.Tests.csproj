@@ -14,8 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Fluency\Fluency.csproj" />
-    <ProjectReference Include="..\SampleApplication\SampleApplication.csproj" />
+    <ProjectReference Include="..\..\src\Fluency\Fluency.csproj" />
+    <ProjectReference Include="..\..\src\SampleApplication\SampleApplication.csproj" />
   </ItemGroup>
 
 </Project>
